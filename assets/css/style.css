@@ -1,0 +1,34 @@
+header {
+    font-family: 'Parisienne', cursive;
+    text-align: center;
+}
+
+.subtitle {
+    font-family: 'Parisienne', cursive;
+    margin-top: 20px;
+}
+
+ .subtitle-two {
+    font-family: 'Parisienne', cursive;
+    text-align: center;
+}
+
+#map-wrapper {
+    /*adjust margins based on size of map*/
+    margin-left: 20px;
+    margin-top: 85px;
+}
+
+button {
+    border-radius: 6px;
+}
+   
+#option-container {
+    margin-left: 175px;
+    margin-right: 175px;
+}
+
+#review-container {
+    margin-left: 175px;
+    margin-right: 175px;
+}
