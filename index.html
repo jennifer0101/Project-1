@@ -192,13 +192,40 @@
             </div>
         </div>
         <footer>
-            <!--Javascript file-->
-            <script async defer
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8ImaXYyrXJ_IWWo4wClOjDonu4XtDmVk&callback=initMap">
-            </script>
-            <script src="assets/javascript/logic.js"></script>
-            
+
         </footer>
+
+        <!--Javascript file-->
+
+        <!-- <script>
+        function initMap() {
+            console.log("ran script2");
+    // The location of midPoint
+    var midPoint = {
+      lat: 44.976537,
+      lng: -93.224576
+    };
+    // The map, centered at midPoint
+    var map;
+    var bounds = new google.maps.LatLngBounds();
+   // var mapOptions = {
+   //   mapTypeId: 'roadmap',
+   //   zoom: 12,
+   //   center: midPoint
+   // };
+  
+    map = new google.maps.Map(document.getElementById("map-container"), {
+      mapTypeId: 'roadmap',
+      zoom: 12,
+      center: midPoint
+    });
+        }
+        </script> -->
+        <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8ImaXYyrXJ_IWWo4wClOjDonu4XtDmVk&callback=placeholderMap">
+        </script>
+        <script src="assets/javascript/logic.js"></script>
+
 </body>
 
 </html>
