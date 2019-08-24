@@ -39,14 +39,14 @@
                             <form class="col s12" id="your-address">
                                 <div class="row" style="margin-bottom: 0px;">
                                     <div class="input-field col s12">
-                                        <input id="address-oneA" type="text" class="validate">
-                                        <label for="address-oneA">Address line 1</label>
+                                        <input id="address_oneA" type="text" class="validate">
+                                        <label for="address_oneA">Address line 1</label>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-bottom: 0px;">
                                     <div class="input-field col s12">
-                                        <input id="address-twoA" type="text" class="validate">
-                                        <label for="address-twoA">Address line 2</label>
+                                        <input id="address_twoA" type="text" class="validate">
+                                        <label for="address_twoA">Address line 2</label>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-bottom: 0px;">
@@ -59,7 +59,7 @@
                                         <label for="stateA">State</label>
                                     </div>
                                     <div class="input-field col s4">
-                                        <input id="zipecodeA" type="text" class="validate">
+                                        <input id="zipcodeA" type="text" class="validate">
                                         <label for="zipcodeA">Zipcode</label>
                                     </div>
                                 </div>
@@ -72,14 +72,14 @@
                             <form class="col s12" id="your-friend">
                                 <div class="row" style="margin-bottom: 0px;">
                                     <div class="input-field col s12">
-                                        <input id="address-oneB" type="text" class="validate">
-                                        <label for="address-oneB">Address line 1</label>
+                                        <input id="address_oneB" type="text" class="validate">
+                                        <label for="address_oneB">Address line 1</label>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-bottom: 0px;">
                                     <div class="input-field col s12">
-                                        <input id="address-twoB" type="text" class="validate">
-                                        <label for="address-twoB">Address line 2</label>
+                                        <input id="address_twoB" type="text" class="validate">
+                                        <label for="address_twoB">Address line 2</label>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-bottom: 0px;">
@@ -92,7 +92,7 @@
                                         <label for="stateB">State</label>
                                     </div>
                                     <div class="input-field col s4">
-                                        <input id="zipecodeB" type="text" class="validate">
+                                        <input id="zipcodeB" type="text" class="validate">
                                         <label for="zipcodeB">Zipcode</label>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
                     </div>
                     <!--Submit button for forms-->
                     <div class="right-align">
-                        <button class="waves-effect btn-small" type="submit">Submit</button>
+                        <button id="submit" class="waves-effect btn-small" type="submit">Submit</button>
                     </div>
                 </div>
             </div>
@@ -196,33 +196,8 @@
         </footer>
 
         <!--Javascript file-->
-
-        <!-- <script>
-        function initMap() {
-            console.log("ran script2");
-    // The location of midPoint
-    var midPoint = {
-      lat: 44.976537,
-      lng: -93.224576
-    };
-    // The map, centered at midPoint
-    var map;
-    var bounds = new google.maps.LatLngBounds();
-   // var mapOptions = {
-   //   mapTypeId: 'roadmap',
-   //   zoom: 12,
-   //   center: midPoint
-   // };
-  
-    map = new google.maps.Map(document.getElementById("map-container"), {
-      mapTypeId: 'roadmap',
-      zoom: 12,
-      center: midPoint
-    });
-        }
-        </script> -->
         <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8ImaXYyrXJ_IWWo4wClOjDonu4XtDmVk&callback=placeholderMap">
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8ImaXYyrXJ_IWWo4wClOjDonu4XtDmVk&callback=initMap">
         </script>
         <script src="assets/javascript/logic.js"></script>
 
