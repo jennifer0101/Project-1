@@ -8,7 +8,7 @@ header {
     margin-top: 20px;
 }
 
- .subtitle-two {
+.subtitle-two {
     font-family: 'Parisienne', cursive;
     text-align: center;
 }
@@ -22,7 +22,7 @@ header {
 button {
     border-radius: 6px;
 }
-   
+
 #option-container {
     margin-left: 175px;
     margin-right: 175px;
@@ -31,4 +31,9 @@ button {
 #review-container {
     margin-left: 175px;
     margin-right: 175px;
+}
+
+#map-container {
+    height: 468px;
+    width: 100%
 }
