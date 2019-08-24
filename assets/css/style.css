@@ -37,3 +37,12 @@ button {
     height: 468px;
     width: 100%
 }
+
+.inputError {
+    background-color: lightcoral !important;
+}
+
+.redText {
+    color: red;
+    margin-top: 0;
+}
