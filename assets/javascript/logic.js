@@ -200,17 +200,22 @@ function midPointCalc(latlongs) {
 }
 
 function zomatoCall(midPoint) {
-  let queryURL = "https://developers.zomato.com/api/v2.1/search?count=5&lat=" + midPoint.lat + "&lon=" + midPoint.lng + "&radius=4023.36&sort=real_distance&apikey=8b2f1efc94c42842b627309b15cae91b";
+  let queryURL = "https://developers.zomato.com/api/v2.1/search?lat=" + midPoint.lat + "&lon=" + midPoint.lng + "&radius=4023.36&sort=real_distance&apikey=8b2f1efc94c42842b627309b15cae91b";
   $.ajax({
     url: queryURL,
     method: "GET"
   }).then(function (response) {
     let markers = [];
-    let restaurantCount = response.restaurants.length;
-    for (var i = 0; i < restaurantCount; i++) {
-      markers.push([response.restaurants[i].restaurant.name, response.restaurants[i].restaurant.location.latitude, response.restaurants[i].restaurant.location.longitude])
+    let sorted = response.restaurants.slice(0);
+    sorted.sort(function (a, b) {
+      return b.restaurant.user_rating.aggregate_rating - a.restaurant.user_rating.aggregate_rating
+    })
+
+    for (var i = 0; i < 5; i++) {
+      markers.push([sorted[i].restaurant.name, sorted[i].restaurant.location.latitude, sorted[i].restaurant.location.longitude, sorted[i].restaurant.location.address, sorted[i].restaurant.phone_numbers, sorted[i].restaurant.url])
     }
-    console.log(response)
+    console.log("response: ", response);
+    console.log("sorted resp: ", sorted);
     console.log(markers);
     midPointMap(midPoint, markers);
   })
@@ -231,19 +236,13 @@ function midPointMap(midPoint, markers) {
     radius: 4023.36
   });
 
-  // Info Window Content       *********************OUT of CURRENT SCOPE********************
-  //   var infoWindowContent = [
-  //       ['<div class="info_content">' +
-  //  '<h3>London Eye</h3>' +
-  //  '<p>The London Eye is a giant Ferris wheel situated on the banks of the River Thames. The entire structure is 135 metres (443 ft) tall and the wheel has a diameter of 120 metres (394 ft).</p>' + '</div>'],
-  //   
-  //  ];
-
-  // Display multiple markers on a map       *********************OUT of CURRENT SCOPE********************
-  //  var infoWindow = new google.maps.InfoWindow(), marker, i;
+  // Display multiple markers on a map
+  let infoWindow = new google.maps.InfoWindow(),
+    marker, i;
 
   // Loop through our array of markers & place each one on the map  
   for (i = 0; i < markers.length; i++) {
+    let infoWindowContent = "<div class=\"info_content\">" + "<h6>" + markers[i][0] + "</h6>" + "<p class=\"infoWindowContentMargin\">" + markers[i][3] + "</p>" + "<p class=\"infoWindowContentMargin\">" + markers[i][4] + "</p>" + "<p class=\"infoWindowContentMargin\"><a href=" + markers[i][5] + " target=\"_blank\" alt=\"Zomato's Restaurant URL\">Zomato's \"" + markers[i][0] + "\" Page</a></p></div>";
     let position = new google.maps.LatLng(markers[i][1], markers[i][2]);
     bounds.extend(position);
     let marker = new google.maps.Marker({
@@ -252,13 +251,13 @@ function midPointMap(midPoint, markers) {
       title: markers[i][0]
     });
 
-    // Allow each marker to have an info window           *********************OUT of CURRENT SCOPE********************
-    //       google.maps.event.addListener(marker, 'click', (function(marker, i) {
-    //           return function() {
-    //               infoWindow.setContent(infoWindowContent[i][0]);
-    //               infoWindow.open(map, marker);
-    //           }
-    //       })(marker, i));
+    // Allow each marker to have an info window
+    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+      return function () {
+        infoWindow.setContent(infoWindowContent);
+        infoWindow.open(map, marker);
+      }
+    })(marker, i));
 
 
     // ***this is not needed becuase we are not zooming in beyond our radius***
