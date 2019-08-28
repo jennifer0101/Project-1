@@ -4,52 +4,19 @@ $(document).ready(function () {
   $("#submit").on("click", validateInputs);
 });
 
+// Global variables and prototypes declared
 var map;
-
-function zomatoCall(midPoint) {
-  let queryURL = "https://developers.zomato.com/api/v2.1/search?count=5&lat=" + midPoint.lat + "&lon=" + midPoint.lng + "&radius=4023.36&sort=real_distance&apikey=8b2f1efc94c42842b627309b15cae91b";
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  }).then(function (response) {
-    let markers = [];
-    let restaurantCount = response.restaurants.length;
-    for (var i = 0; i < restaurantCount; i++) {
-      markers.push([response.restaurants[i].restaurant.name, response.restaurants[i].restaurant.location.latitude, response.restaurants[i].restaurant.location.longitude])
-    }
-    console.log(response)
-    console.log(markers);
-    midPointMap(midPoint, markers);
-  })
+//-- Define radius function
+if (typeof (Number.prototype.toRad) === "undefined") {
+  Number.prototype.toRad = function () {
+    return this * Math.PI / 180;
+  }
 }
-
-function geoCodeAddresses(addresses) {
-  let geocoder = new google.maps.Geocoder();
-  let latlongs = [];
-  $(addresses).each(function (index, value) {
-    geocoder.geocode({
-      'address': value
-    }, function (results, status) {
-      if (status === "OK") {
-        latlongs.push([results[0].geometry.location.lat(), results[0].geometry.location.lng()]);
-      } else {
-        // ****************need to make this a modal or something other than an alert. i guess we don't HAVE to have it, but it's a good UX****************
-        alert('Geocode was not successful for the following reason: ' + status);
-      }
-    });
-  })
-  console.log(latlongs);
-  midPointCalc(latlongs);
-}
-
-function midPointCalc(latlongs) {
-  let midPoint;
-  let midPointTest = {
-    lat: 44.976537,
-    lng: -93.224576
-  };
-  // *********************make calculation here using latlongs argument that gets passed in*********************
-  zomatoCall(midPointTest);
+//-- Define degrees function
+if (typeof (Number.prototype.toDeg) === "undefined") {
+  Number.prototype.toDeg = function () {
+    return this * (180 / Math.PI);
+  }
 }
 
 function initMap() {
@@ -66,61 +33,6 @@ function initMap() {
     center: midPointUSA
   };
   map = new google.maps.Map(document.getElementById("map-container"), mapOptions);
-}
-
-function midPointMap(midPoint, markers) {
-  map.setCenter(midPoint);
-  // map.setZooom(12);  <- likely not need with fitbounds function below
-  let bounds = new google.maps.LatLngBounds();
-  let radius = new google.maps.Circle({
-    strokeColor: '#FF0000',
-    strokeOpacity: 0.4,
-    strokeWeight: 2,
-    fillColor: '#FF0000',
-    fillOpacity: 0.15,
-    map: map,
-    center: midPoint,
-    radius: 4023.36
-  });
-
-  // Info Window Content       *********************OUT of CURRENT SCOPE********************
-  //   var infoWindowContent = [
-  //       ['<div class="info_content">' +
-  //  '<h3>London Eye</h3>' +
-  //  '<p>The London Eye is a giant Ferris wheel situated on the banks of the River Thames. The entire structure is 135 metres (443 ft) tall and the wheel has a diameter of 120 metres (394 ft).</p>' + '</div>'],
-  //   
-  //  ];
-
-  // Display multiple markers on a map       *********************OUT of CURRENT SCOPE********************
-  //  var infoWindow = new google.maps.InfoWindow(), marker, i;
-
-  // Loop through our array of markers & place each one on the map  
-  for (i = 0; i < markers.length; i++) {
-    let position = new google.maps.LatLng(markers[i][1], markers[i][2]);
-    bounds.extend(position);
-    let marker = new google.maps.Marker({
-      position: position,
-      map: map,
-      title: markers[i][0]
-    });
-
-    // Allow each marker to have an info window           *********************OUT of CURRENT SCOPE********************
-    //       google.maps.event.addListener(marker, 'click', (function(marker, i) {
-    //           return function() {
-    //               infoWindow.setContent(infoWindowContent[i][0]);
-    //               infoWindow.open(map, marker);
-    //           }
-    //       })(marker, i));
-
-    // Automatically center the map fitting all markers on the screen
-    map.fitBounds(bounds);
-  }
-
-  // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
-  let boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
-    this.setZoom(12);
-    google.maps.event.removeListener(boundsListener);
-  });
 }
 
 function validateInputs(event) {
@@ -159,7 +71,6 @@ function validateInputs(event) {
     if (!inputsRequired[value]) {
       $("#" + value).addClass("inputError");
       if ($("#" + value).siblings(".empty").length === 0) {
-        $(newPElem).addClass("empty");
         $("#" + value).parent().append(newPElem);
       }
       badInputCheck = true;
@@ -238,4 +149,127 @@ function validateInputs(event) {
     addresses.push(fullAddressA, fullAddressB);
     geoCodeAddresses(addresses);
   }
+}
+
+function geoCodeAddresses(addresses) {
+  let geocoder = new google.maps.Geocoder();
+  let latlongs = [];
+  $(addresses).each(function (index, value) {
+    geocoder.geocode({
+      'address': value
+    }, function (results, status) {
+      if (status === "OK") {
+        latlongs.push([results[0].geometry.location.lat(), results[0].geometry.location.lng()]);
+        if (latlongs.length === addresses.length) {
+          midPointCalc(latlongs);
+        }
+      } else {
+        // ****************need to make this a modal or something other than an alert. i guess we don't HAVE to have it, but it's a good UX****************
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  })
+}
+
+function midPointCalc(latlongs) {
+  let midPoint;
+  let lat1 = latlongs[0][0];
+  let lng1 = latlongs[0][1];
+  let lat2 = latlongs[1][0];
+  let lng2 = latlongs[1][1];
+
+  //-- Longitude difference
+  let dLng = (lng2 - lng1).toRad();
+
+  //-- Convert to radians
+  lat1 = lat1.toRad();
+  lat2 = lat2.toRad();
+  lng1 = lng1.toRad();
+  let bX = Math.cos(lat2) * Math.cos(dLng);
+  let bY = Math.cos(lat2) * Math.sin(dLng);
+  let lat3 = Math.atan2(Math.sin(lat1) + Math.sin(lat2), Math.sqrt((Math.cos(lat1) + bX) * (Math.cos(lat1) + bX) + bY * bY));
+  let lng3 = lng1 + Math.atan2(bY, Math.cos(lat1) + bX);
+
+  //-- Return result
+  midPoint = {
+    lat: lat3.toDeg(),
+    lng: lng3.toDeg()
+  }
+  console.log("midpoint: ", midPoint);
+  zomatoCall(midPoint);
+}
+
+function zomatoCall(midPoint) {
+  let queryURL = "https://developers.zomato.com/api/v2.1/search?lat=" + midPoint.lat + "&lon=" + midPoint.lng + "&radius=4023.36&sort=real_distance&apikey=8b2f1efc94c42842b627309b15cae91b";
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function (response) {
+    let markers = [];
+    let sorted = response.restaurants.slice(0);
+    sorted.sort(function (a, b) {
+      return b.restaurant.user_rating.aggregate_rating - a.restaurant.user_rating.aggregate_rating
+    })
+
+    for (var i = 0; i < 5; i++) {
+      markers.push([sorted[i].restaurant.name, sorted[i].restaurant.location.latitude, sorted[i].restaurant.location.longitude, sorted[i].restaurant.location.address, sorted[i].restaurant.phone_numbers, sorted[i].restaurant.url])
+    }
+    console.log("response: ", response);
+    console.log("sorted resp: ", sorted);
+    console.log(markers);
+    midPointMap(midPoint, markers);
+  })
+}
+
+function midPointMap(midPoint, markers) {
+  map.setCenter(midPoint);
+  map.setZoom(12.5);
+  let bounds = new google.maps.LatLngBounds();
+  let radius = new google.maps.Circle({
+    strokeColor: '#FF0000',
+    strokeOpacity: 0.4,
+    strokeWeight: 2,
+    fillColor: '#FF0000',
+    fillOpacity: 0.15,
+    map: map,
+    center: midPoint,
+    radius: 4023.36
+  });
+
+  // Display multiple markers on a map
+  let infoWindow = new google.maps.InfoWindow(),
+    marker, i;
+
+  // Loop through our array of markers & place each one on the map  
+  for (i = 0; i < markers.length; i++) {
+    let infoWindowContent = "<div class=\"info_content\">" + "<h6>" + markers[i][0] + "</h6>" + "<p class=\"infoWindowContentMargin\">" + markers[i][3] + "</p>" + "<p class=\"infoWindowContentMargin\">" + markers[i][4] + "</p>" + "<p class=\"infoWindowContentMargin\"><a href=" + markers[i][5] + " target=\"_blank\" alt=\"Zomato's Restaurant URL\">Zomato's \"" + markers[i][0] + "\" Page</a></p></div>";
+    let position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+    bounds.extend(position);
+    let marker = new google.maps.Marker({
+      position: position,
+      map: map,
+      title: markers[i][0]
+    });
+
+    // Allow each marker to have an info window
+    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+      return function () {
+        infoWindow.setContent(infoWindowContent);
+        infoWindow.open(map, marker);
+      }
+    })(marker, i));
+
+
+    // ***this is not needed becuase we are not zooming in beyond our radius***
+    // Automatically center the map fitting all markers on the screen 
+    // map.fitBounds(bounds);
+  }
+
+
+  // ***this is not needed becuase we are not zooming in beyond our radius***
+  // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+  // let boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
+  //   this.setZoom(12.5);
+  //   google.maps.event.removeListener(boundsListener);
+  // });
 }

@@ -46,3 +46,7 @@ button {
     color: red;
     margin-top: 0;
 }
+
+.infoWindowContentMargin {
+    margin: 2px 0;
+}
