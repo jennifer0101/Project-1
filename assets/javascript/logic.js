@@ -218,6 +218,19 @@ function zomatoCall(midPoint) {
     console.log("sorted resp: ", sorted);
     console.log(markers);
     midPointMap(midPoint, markers);
+
+    //Displaying the options the area below==========================================
+    $("#option-container").append("<tr><td>" + markers[0][0] + "<td>" + markers[0][3] + "<td>" + markers[0][5]);
+    $("#option-container").append("<tr><td>" + markers[1][0] + "<td>" + markers[1][3] + "<td>" + markers[1][5]);
+    $("#option-container").append("<tr><td>" + markers[2][0] + "<td>" + markers[2][3] + "<td>" + markers[2][5]);
+    $("#option-container").append("<tr><td>" + markers[3][0] + "<td>" + markers[3][3] + "<td>" + markers[3][5]);
+    $("#option-container").append("<tr><td>" + markers[4][0] + "<td>" + markers[4][3] + "<td>" + markers[4][5]);
+
+    console.log(markers[0][0]);
+    console.log(markers[0][3]);
+    console.log(markers[0][5]);
+
+    //===============================================================================
   })
 }
 
