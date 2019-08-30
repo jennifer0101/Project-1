@@ -13,12 +13,6 @@ header {
     text-align: center;
 }
 
-#map-wrapper {
-    /*adjust margins based on size of map*/
-    margin-left: 20px;
-    margin-top: 85px;
-}
-
 button {
     border-radius: 6px;
 }
@@ -34,8 +28,8 @@ button {
 }
 
 #map-container {
-    height: 468px;
-    width: 100%
+    height: 550px;
+    width: 100%;
 }
 
 .inputError {
@@ -45,4 +39,52 @@ button {
 .redText {
     color: red;
     margin-top: 0;
+}
+
+#formOne-wrapper {
+    width: 100%;
+    margin-right: 15px;
+}
+
+#formTwo-wrapper {
+    width: 100%;
+    margin-right: 15px;
+}
+
+
+
+
+@media only screen and (max-width: 992px) {
+    #map-container {
+        width: 100%;
+        float: right;
+    }
+    #formOne-wrapper {
+        width: 100%;
+        margin-right: 15px;
+    }
+    
+    #formTwo-wrapper {
+        width: 100%;
+        margin-right: 15px;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+ 
+    #bothForms-wrapper {
+        width: 100%;
+    }
+
+    #formOne-wrapper {
+        float:left;
+    }
+
+    #formTwo-wrapper {
+        float: left;
+    }
+
+    #map-container {
+        clear: both;
+    }
 }
