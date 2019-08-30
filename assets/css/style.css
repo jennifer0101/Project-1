@@ -41,7 +41,6 @@ button {
     margin-top: 0;
 }
 
-<<<<<<< HEAD
 #formOne-wrapper {
     width: 100%;
     margin-right: 15px;
@@ -52,7 +51,10 @@ button {
     margin-right: 15px;
 }
 
-
+#directions {
+    text-align: center;
+    font-size: 20px;
+}
 
 
 @media only screen and (max-width: 992px) {
@@ -88,8 +90,7 @@ button {
     #map-container {
         clear: both;
     }
-=======
+    
 .infoWindowContentMargin {
     margin: 2px 0;
->>>>>>> b6788ce466c23edf3f30a4ac9f04b871f65d1c09
 }
