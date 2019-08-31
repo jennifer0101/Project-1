@@ -50,6 +50,10 @@ button {
     border-width: 100%;
 }
 
+.infoWindowContentMargin {
+    margin: 2px 0;
+}
+
 @media only screen and (max-width: 992px) {
    
     #iconA {
@@ -71,8 +75,4 @@ button {
     #icon {
         margin-top: 0px;
     }
-}
-
-.infoWindowContentMargin {
-    margin: 2px 0;
 }
