@@ -1,26 +1,30 @@
-//Materialize Parallax, submit effect function.
+// Materialize Parallax, submit effect function.
 $(document).ready(function () {
   $('.parallax').parallax();
   $('select').formSelect();
+  $('.modal').modal();
   $("#submit").on("click", validateInputs);
 });
 
 // Global variables and prototypes declared
 var map;
 var reviews = [];
-//-- Define radius function
+
+// Define radius function
 if (typeof (Number.prototype.toRad) === "undefined") {
   Number.prototype.toRad = function () {
     return this * Math.PI / 180;
   }
 }
-//-- Define degrees function
+
+// Define degrees function
 if (typeof (Number.prototype.toDeg) === "undefined") {
   Number.prototype.toDeg = function () {
     return this * (180 / Math.PI);
   }
 }
 
+// Global functions declared
 function initMap() {
   // The location of the midPoint of USA
   let midPointUSA = {
@@ -196,10 +200,10 @@ function midPointCalc(latlongs) {
   let lat2 = latlongs[1][0];
   let lng2 = latlongs[1][1];
 
-  //-- Longitude difference
+  // Longitude difference
   let dLng = (lng2 - lng1).toRad();
 
-  //-- Convert to radians
+  // Convert to radians
   lat1 = lat1.toRad();
   lat2 = lat2.toRad();
   lng1 = lng1.toRad();
@@ -208,7 +212,7 @@ function midPointCalc(latlongs) {
   let lat3 = Math.atan2(Math.sin(lat1) + Math.sin(lat2), Math.sqrt((Math.cos(lat1) + bX) * (Math.cos(lat1) + bX) + bY * bY));
   let lng3 = lng1 + Math.atan2(bY, Math.cos(lat1) + bX);
 
-  //-- Return result
+  // Set result to midPoint to pass through
   midPoint = {
     lat: lat3.toDeg(),
     lng: lng3.toDeg()
@@ -222,7 +226,7 @@ function zomatoCall(midPoint) {
   let radiusInput = $("#radius").val().trim();
   let queryURL;
 
-  // converting miles input to meters as required by api call
+  // Converting miles input to meters as required by api call
   radiusInput = radiusInput * 1609.344;
 
   if (cuisine) {
@@ -251,7 +255,7 @@ function zomatoCall(midPoint) {
     console.log(markers);
     console.log(reviews);
     midPointMap(midPoint, markers, radiusInput);
-    createRestaurantTable(markers);
+    createRestaurantTable(markers, reviews);
   })
 }
 
@@ -292,33 +296,64 @@ function midPointMap(midPoint, markers, radiusInput) {
       }
     })(marker, i));
   }
+  
   // Automatically center the map fitting all markers on the screen 
   map.fitBounds(radius.getBounds(), 0);
 }
 
-function createRestaurantTable(markers) {
+function createRestaurantTable(markers, reviews) {
+  // Restaurant options table variables
   let restaurants = markers;
-  let newOptionTableElem = $("<table class= 'z-depth-1 highlight'>");
+  let restaurantsElem = $("#restaurants");
+  let newOptionTableElem = $("<table id=\"restuarantOptions\" class=\"z-depth-1 highlight\">");
   let newOptionTableHeadElem = $("<thead>");
+  let newOptionTableBodyElem = $("<tbody>");
   let newOptionTableHeadRowElem = $("<tr>");
   let newOptionTableHeaderNameElem = $("<th class=\"tableHeader\">");
   let newOptionTableHeaderRatingElem = $("<th class=\"tableHeader\">");
   let newOptionTableHeaderAddressElem = $("<th class=\"tableHeader\">");
   let newOptionTableHeaderWebsiteElem = $("<th class=\"tableHeader\">");
-  let newReviewTableElem = $("<table>");
 
-  $("#restaurants").text("");
+  // Restaurant reviews table variables
+  let newReviewDivElem = $("<div id=\"reviews\">");
+  let newReviewHeadingElem = $("<h4 class=\"subtitle-two\">");
+  let newReviewTableElem = $("<table>");
+  let newReviewTableHeadElem = $("<thead>");
+  let newReviewTableBodyElem = $("<tbody>");
+  let newReviewTableHeadRowElem = $("<tr>");
+  let newReviewTableHeaderRatingElem = $("<th class=\"tableHeader\">");
+  let newReviewTableHeaderCommentElem = $("<th class=\"tableHeader\">");
+  let newReviewTableHeaderDateElem = $("<th class=\"tableHeader\">");
+
+  // Restaurant options table elements combined
+  $(restaurantsElem).text("");
   $(newOptionTableHeaderNameElem).text("Name");
   $(newOptionTableHeaderRatingElem).text("Rating");
   $(newOptionTableHeaderAddressElem).text("Address");
   $(newOptionTableHeaderWebsiteElem).text("Website");
-  $("#restaurants").append(newOptionTableElem);
+  $(restaurantsElem).append(newOptionTableElem);
   $(newOptionTableElem).append(newOptionTableHeadElem);
   $(newOptionTableHeadElem).append(newOptionTableHeadRowElem);
   $(newOptionTableHeadRowElem).append(newOptionTableHeaderNameElem);
   $(newOptionTableHeadRowElem).append(newOptionTableHeaderRatingElem);
   $(newOptionTableHeadRowElem).append(newOptionTableHeaderAddressElem);
   $(newOptionTableHeadRowElem).append(newOptionTableHeaderWebsiteElem);
+  $(newOptionTableElem).append(newOptionTableBodyElem);
+
+  // Restaurant reviews table elements combined
+  $(newReviewTableHeaderRatingElem).text("Rating");
+  $(newReviewTableHeaderCommentElem).text("Comment");
+  $(newReviewTableHeaderDateElem).text("Review Date");
+  $(restaurantsElem).append(newReviewDivElem);
+  $(newReviewDivElem).append(newReviewHeadingElem);
+  $(newReviewHeadingElem).text("Restaurant Reviews");
+  $(newReviewDivElem).append(newReviewTableElem);
+  $(newReviewTableElem).append(newReviewTableHeadElem);
+  $(newReviewTableHeadElem).append(newReviewTableHeadRowElem);
+  $(newReviewTableHeadRowElem).append(newReviewTableHeaderRatingElem);
+  $(newReviewTableHeadRowElem).append(newReviewTableHeaderCommentElem);
+  $(newReviewTableHeadRowElem).append(newReviewTableHeaderDateElem);
+  $(newReviewTableElem).append(newReviewTableBodyElem);
 
   $(restaurants).each(function (index, value) {
     let newRestaurantRowElem = $("<tr>");
@@ -331,6 +366,9 @@ function createRestaurantTable(markers) {
     let tempRestaurantAddress = markers[index][3];
     let modRestaurantAddress = tempRestaurantAddress.replace(/\s/g, "+");
 
+    $(newRestaurantRowElem).attr({
+      id: index
+    });
     $(newRestaurantNameElem).text(markers[index][0]);
     $(newRestaurantRatingElem).text(markers[index][6]);
     $(newAddressAnchorElem).attr({
@@ -347,11 +385,30 @@ function createRestaurantTable(markers) {
     $(newWebsiteAnchorElem).text(markers[index][0]);
     $(newRestaurantAddressElem).append(newAddressAnchorElem);
     $(newRestaurantWebsiteElem).append(newWebsiteAnchorElem);
-
     $(newRestaurantRowElem).append(newRestaurantNameElem);
     $(newRestaurantRowElem).append(newRestaurantRatingElem);
     $(newRestaurantRowElem).append(newRestaurantAddressElem);
     $(newRestaurantRowElem).append(newRestaurantWebsiteElem);
-    $(newOptionTableElem).append(newRestaurantRowElem);
+    $(newOptionTableBodyElem).append(newRestaurantRowElem);
   })
+
+  $(reviews[0]).each(function (index, value) {
+    let newReviewRowElem = $("<tr>");
+    let newReviewRatingElem = $("<td>");
+    let newReviewCommentElem = $("<td>");
+    let newReviewDateElem = $("<td>");
+    if (reviews[0][index].review.rating_text === "Not rated") {
+      $(newReviewRatingElem).text("Not Rated");
+    } else {
+      $(newReviewRatingElem).text(reviews[0][index].review.rating);
+    }
+    $(newReviewCommentElem).text(reviews[0][index].review.review_text);
+    $(newReviewDateElem).text(reviews[0][index].review.review_time_friendly);
+
+    $(newReviewRowElem).append(newReviewRatingElem);
+    $(newReviewRowElem).append(newReviewCommentElem);
+    $(newReviewRowElem).append(newReviewDateElem);
+    $(newReviewTableBodyElem).append(newReviewRowElem);
+  })
+  $("#restaurantOptions table tbody tr #0").addClass("selected");
 }
