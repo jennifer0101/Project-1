@@ -25,89 +25,154 @@
         <h3>Mmm•Eat</h3>
     </header>
     <!--Parallax effect first photo-->
-    <div class="parallax-container" style="height: 250px;">
+    <div class="parallax-container z-depth-1" style="height: 250px;">
         <div class="parallax"><img src="assets/images/food-1.jpg"></div>
     </div>
     <!--Container for materialize grid-->
     <div class="container">
         <div class="row">
-            <div class="col s12 m12 l5">
-                <!--Both forms, titles, submit button wrapper-->
-                <div id="bothForms-wrapper">
-                    <div class="row">
-                        <!--"Your Address" - first form wrapper-->
-                        <div id="formOne-wrapper">
-                            <h5 class="subtitle">Your address:</h5>
-                            <form class="col s12" id="your-address">
-                                <div class="row" style="margin-bottom: 0px;">
-                                    <div class="input-field col s12">
-                                        <input id="address_oneA" type="text" class="validate">
-                                        <label for="address_oneA">Address line 1</label>
-                                    </div>
+            <!--Both forms, titles, submit button wrapper-->
+            <div id="bothForms-wrapper">
+                <!--"Your Address" - first form wrapper-->
+                <div class="col s12 m12 l5">
+                    <div id="formOne-wrapper">
+                        <h5 class="subtitle">Your address:</h5>
+                        <form id="your-address">
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="input-field col s12">
+                                    <input id="address_oneA" type="text" class="validate">
+                                    <label for="address_oneA">Address line 1</label>
                                 </div>
-                                <div class="row" style="margin-bottom: 0px;">
-                                    <div class="input-field col s12">
-                                        <input id="address_twoA" type="text" class="validate">
-                                        <label for="address_twoA">Address line 2</label>
-                                    </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="input-field col s12">
+                                    <input id="address_twoA" type="text" class="validate">
+                                    <label for="address_twoA">Address line 2</label>
                                 </div>
-                                <div class="row" style="margin-bottom: 0px;">
-                                    <div class="input-field col s5">
-                                        <input id="cityA" type="text" class="validate">
-                                        <label for="cityA">City</label>
-                                    </div>
-                                    <div class="input-field col s3">
-                                        <input id="stateA" type="text" class="validate">
-                                        <label for="stateA">State</label>
-                                    </div>
-                                    <div class="input-field col s4">
-                                        <input id="zipcodeA" type="text" class="validate">
-                                        <label for="zipcodeA">Zipcode</label>
-                                    </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="input-field col s7">
+                                    <input id="cityA" type="text" class="validate">
+                                    <label for="cityA">City</label>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="row"></div>
-                        <!--"Your Friend's Address" - second form wrapper-->
-                        <div id="formTwo-wrapper">
-                            <h5 class="subtitle">Your friend's address:</h5>
-                            <form class="col s12" id="your-friend">
-                                <div class="row" style="margin-bottom: 0px;">
-                                    <div class="input-field col s12">
-                                        <input id="address_oneB" type="text" class="validate">
-                                        <label for="address_oneB">Address line 1</label>
-                                    </div>
+                                <div class="input-field col s2">
+                                    <input id="stateA" type="text" class="validate">
+                                    <label for="stateA">State</label>
                                 </div>
-                                <div class="row" style="margin-bottom: 0px;">
-                                    <div class="input-field col s12">
-                                        <input id="address_twoB" type="text" class="validate">
-                                        <label for="address_twoB">Address line 2</label>
-                                    </div>
+                                <div class="input-field col s3">
+                                    <input id="zipcodeA" type="text" class="validate">
+                                    <label for="zipcodeA">Zipcode</label>
                                 </div>
-                                <div class="row" style="margin-bottom: 0px;">
-                                    <div class="input-field col s5">
-                                        <input id="cityB" type="text" class="validate">
-                                        <label for="cityB">City</label>
-                                    </div>
-                                    <div class="input-field col s3">
-                                        <input id="stateB" type="text" class="validate">
-                                        <label for="stateB">State</label>
-                                    </div>
-                                    <div class="input-field col s4">
-                                        <input id="zipcodeB" type="text" class="validate">
-                                        <label for="zipcodeB">Zipcode</label>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
-                    <!--Submit button for forms-->
-                    <div>
-                        <button id="submit" class="waves-effect btn-small" type="submit">Submit</button>
+                </div>
+                <div class="col s12 m12 l2">
+                    <p id="iconA">
+                        <i class="small material-icons">arrow_forward</i>
+                    </p>
+                </div>
+                <div class="col s12 m12 l5">
+                    <!--"Your Friend's Address" - second form wrapper-->
+                    <div id="formTwo-wrapper">
+                        <h5 class="subtitle">Your friend's address:</h5>
+                        <form id="your-friend">
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="input-field col s12">
+                                    <input id="address_oneB" type="text" class="validate">
+                                    <label for="address_oneB">Address line 1</label>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="input-field col s12">
+                                    <input id="address_twoB" type="text" class="validate">
+                                    <label for="address_twoB">Address line 2</label>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="input-field col s7">
+                                    <input id="cityB" type="text" class="validate">
+                                    <label for="cityB">City</label>
+                                </div>
+                                <div class="input-field col s2">
+                                    <input id="stateB" type="text" class="validate">
+                                    <label for="stateB">State</label>
+                                </div>
+                                <div class="input-field col s3">
+                                    <input id="zipcodeB" type="text" class="validate">
+                                    <label for="zipcodeB">Zipcode</label>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-            <div class="col s12 m12 l7">
+        </div>
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <p class="z-depth-1" id="border"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m3 l3">
+                <!--Radius and Cuisine selector wrapper-->
+                <div id="cuisineRadius-wrapper">
+                    <h5 class="subtitle">Midpoint Radius in Miles:</h5>
+                    <!--Radius input form-->
+                    <form id="radius-input">
+                        <div class="input-field col s12">
+                            <input id="radius" type="text" class="validate">
+                            <label for="radius">Enter whole number</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col s12 m2 l2">
+                <p id="iconB">
+                    <i class="small material-icons">restaurant_menu</i>
+                </p>
+            </div>
+            <div class="col s12 m4 l4" id="cuisine-choice">
+                <h5 class="subtitle">Cuisine Choice:</h5>
+                <!--Cuisine selector-->
+                <div class="input-field">
+                    <select class="initialized">
+                        <option value="" disabled="" selected="">Choose your cuisine</option>
+                        <option value="African">African</option>
+                        <option value="American">American</option>
+                        <option value="Asian">Asian</option>
+                        <option value="Bakery">Bakery</option>
+                        <option value="Bar Food">Bar Food</option>
+                        <option value="Caribbean">Caribbean</option>
+                        <option value="Coffee and Tea">Coffee and Tea</option>
+                        <option value="Deli">Deli</option>
+                        <option value="Desserts">Desserts</option>
+                        <option value="Diner">Diner</option>
+                        <option value="Fast Food">Fast Food</option>
+                        <option value="Indian">Indian</option>
+                        <option value="International">International</option>
+                        <option value="Italian">Italian</option>
+                        <option value="Latin American">Latin American</option>
+                        <option value="Middle Eastern">Middle Eastern</option>
+                        <option value="Pizza">Pizza</option>
+                        <option value="Seafood">Seafood</option>
+                        <option value="Southwestern">Southwestern</option>
+                        <option value="Vegetarian">Vegetarian</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <!--Submit button for forms-->
+        <div class="col s12 m12 l12 right-align" style="margin-bottom: 8px">
+            <button id="submit" class="waves-effect btn-small" type="submit">Submit</button>
+        </div>
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <p class="z-depth-1" id="border"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m12 l12">
                 <!--Map container and subtitle wrapper-->
                 <div id="map-wrapper">
                     <h4 class="subtitle-two">Mmm•Eat in the Middle</h4>
@@ -120,7 +185,7 @@
         </div>
     </div>
     <!--Parallax effect second photo-->
-    <div class="parallax-container" style="height: 250px;">
+    <div class="parallax-container z-depth-1" style="height: 250px;">
         <div class="parallax"><img src="assets/images/food-2.jpg"></div>
     </div>
     <div class="container">
@@ -162,9 +227,7 @@
             </div>
         </div>
         <footer>
-
         </footer>
-
         <!--Javascript file-->
         <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8ImaXYyrXJ_IWWo4wClOjDonu4XtDmVk&callback=initMap">

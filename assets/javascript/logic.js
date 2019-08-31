@@ -1,6 +1,7 @@
-//Parallax effect function.
+//Materialize Parallax, submit effect function.
 $(document).ready(function () {
   $('.parallax').parallax();
+  $('select').material_select();
   $("#submit").on("click", validateInputs);
 });
 
