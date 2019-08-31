@@ -1,4 +1,5 @@
-header, .subtitle-two{
+header,
+.subtitle-two {
     text-align: center;
 }
 
@@ -6,7 +7,12 @@ header, .subtitle-two{
     margin-top: 20px;
 }
 
-h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Parisienne', cursive;
 }
 
@@ -46,7 +52,7 @@ button {
 #border {
     border: 1px;
     border-style: solid;
-    border-color:#90908d; 
+    border-color: #90908d;
     border-width: 100%;
 }
 
@@ -58,8 +64,12 @@ button {
     margin: 2px 0;
 }
 
+.selected {
+    background-color: lightslategray;
+}
+
 @media only screen and (max-width: 992px) {
-   
+
     #iconA {
         margin-top: 0px;
     }
@@ -70,12 +80,12 @@ button {
 }
 
 @media only screen and (max-width: 650px) {
- 
+
     #bothForms-wrapper {
         width: 100%;
     }
 
-    
+
     #icon {
         margin-top: 0px;
     }
