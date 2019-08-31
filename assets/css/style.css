@@ -1,16 +1,14 @@
 header {
     text-align: center;
-} 
-
-.subtitle-two{
-    text-align: center;
-    margin-top: 30px;
-    margin-bottom: 15px;
 }
 
 .subtitle {
     margin-top: 30px;
     margin-bottom: 15px;
+}
+
+#bothForms-wrapper {
+    margin: 0 0 15px 0;
 }
 
 h1,
@@ -53,8 +51,20 @@ h6 {
     border-width: 100%;
 }
 
+.formBorder {
+    border-right: 2px solid lightgray;
+}
+
+.directions {
+    font-size: 1rem;
+}
+
 .tableHeader {
     font-weight: bold;
+}
+
+.reviewsHeading {
+    margin: 50px 0 10px 0;
 }
 
 .infoWindowContentMargin {
@@ -62,7 +72,12 @@ h6 {
 }
 
 .selected {
-    background-color: lightslategray;
+    background-color: lightgray;
+}
+
+.footerPar {
+    font-size: .8rem;
+    margin-top: 4px;
 }
 
 @media only screen and (max-width: 992px) {
@@ -74,6 +89,14 @@ h6 {
     #iconB {
         margin-top: 0px;
     }
+
+    .formBorder {
+        border-right: none;
+    }
+
+    .verticalMargin {
+        margin-top: 25px;
+    }
 }
 
 @media only screen and (max-width: 650px) {
@@ -81,7 +104,6 @@ h6 {
     #bothForms-wrapper {
         width: 100%;
     }
-
 
     #icon {
         margin-top: 0px;

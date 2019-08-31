@@ -4,6 +4,7 @@ $(document).ready(function () {
   $('select').formSelect();
   $('.modal').modal();
   $("#submit").on("click", validateInputs);
+  $("#option-wrapper").on("click", "div #restaurantOptions tbody tr", changeReviewsTable);
 });
 
 // Global variables and prototypes declared
@@ -217,7 +218,6 @@ function midPointCalc(latlongs) {
     lat: lat3.toDeg(),
     lng: lng3.toDeg()
   }
-  console.log("midpoint: ", midPoint);
   zomatoCall(midPoint);
 }
 
@@ -250,10 +250,6 @@ function zomatoCall(midPoint) {
       markers.push([sorted[i].restaurant.name, sorted[i].restaurant.location.latitude, sorted[i].restaurant.location.longitude, sorted[i].restaurant.location.address, sorted[i].restaurant.phone_numbers, sorted[i].restaurant.url, sorted[i].restaurant.user_rating.aggregate_rating])
       reviews.push(sorted[i].restaurant.all_reviews.reviews);
     }
-    console.log("response: ", response);
-    console.log("sorted resp: ", sorted);
-    console.log(markers);
-    console.log(reviews);
     midPointMap(midPoint, markers, radiusInput);
     createRestaurantTable(markers, reviews);
   })
@@ -296,7 +292,7 @@ function midPointMap(midPoint, markers, radiusInput) {
       }
     })(marker, i));
   }
-  
+
   // Automatically center the map fitting all markers on the screen 
   map.fitBounds(radius.getBounds(), 0);
 }
@@ -305,7 +301,7 @@ function createRestaurantTable(markers, reviews) {
   // Restaurant options table variables
   let restaurants = markers;
   let restaurantsElem = $("#restaurants");
-  let newOptionTableElem = $("<table id=\"restuarantOptions\" class=\"z-depth-1 highlight\">");
+  let newOptionTableElem = $("<table id=\"restaurantOptions\" class=\"z-depth-1 highlight hoverable\">");
   let newOptionTableHeadElem = $("<thead>");
   let newOptionTableBodyElem = $("<tbody>");
   let newOptionTableHeadRowElem = $("<tr>");
@@ -316,17 +312,17 @@ function createRestaurantTable(markers, reviews) {
 
   // Restaurant reviews table variables
   let newReviewDivElem = $("<div id=\"reviews\">");
-  let newReviewHeadingElem = $("<h4 class=\"subtitle-two\">");
-  let newReviewTableElem = $("<table>");
+  let newReviewHeadingElem = $("<h4 class=\"reviewsHeading\">");
+  let newReviewTableElem = $("<table class=\"hightlight hoverable\">");
   let newReviewTableHeadElem = $("<thead>");
   let newReviewTableBodyElem = $("<tbody>");
   let newReviewTableHeadRowElem = $("<tr>");
-  let newReviewTableHeaderRatingElem = $("<th class=\"tableHeader\">");
-  let newReviewTableHeaderCommentElem = $("<th class=\"tableHeader\">");
-  let newReviewTableHeaderDateElem = $("<th class=\"tableHeader\">");
+  let newReviewTableHeaderRatingElem = $("<th class=\"tableHeader center-align\">");
+  let newReviewTableHeaderCommentElem = $("<th class=\"tableHeader center-align\">");
+  let newReviewTableHeaderDateElem = $("<th class=\"tableHeader center-align\">");
 
   // Restaurant options table elements combined
-  $(restaurantsElem).text("");
+  $(restaurantsElem).empty();
   $(newOptionTableHeaderNameElem).text("Name");
   $(newOptionTableHeaderRatingElem).text("Rating");
   $(newOptionTableHeaderAddressElem).text("Address");
@@ -342,11 +338,11 @@ function createRestaurantTable(markers, reviews) {
 
   // Restaurant reviews table elements combined
   $(newReviewTableHeaderRatingElem).text("Rating");
-  $(newReviewTableHeaderCommentElem).text("Comment");
+  $(newReviewTableHeaderCommentElem).text("Review");
   $(newReviewTableHeaderDateElem).text("Review Date");
   $(restaurantsElem).append(newReviewDivElem);
   $(newReviewDivElem).append(newReviewHeadingElem);
-  $(newReviewHeadingElem).text("Restaurant Reviews");
+  $(newReviewHeadingElem).text("Recent Restaurant Reviews");
   $(newReviewDivElem).append(newReviewTableElem);
   $(newReviewTableElem).append(newReviewTableHeadElem);
   $(newReviewTableHeadElem).append(newReviewTableHeadRowElem);
@@ -355,6 +351,7 @@ function createRestaurantTable(markers, reviews) {
   $(newReviewTableHeadRowElem).append(newReviewTableHeaderDateElem);
   $(newReviewTableElem).append(newReviewTableBodyElem);
 
+  // Create restaurants table
   $(restaurants).each(function (index, value) {
     let newRestaurantRowElem = $("<tr>");
     let newRestaurantNameElem = $("<td>");
@@ -363,11 +360,10 @@ function createRestaurantTable(markers, reviews) {
     let newAddressAnchorElem = $("<a>");
     let newRestaurantWebsiteElem = $("<td>");
     let newWebsiteAnchorElem = $("<a>");
-    let tempRestaurantAddress = markers[index][3];
-    let modRestaurantAddress = tempRestaurantAddress.replace(/\s/g, "+");
+    let modRestaurantAddress = markers[index][3].replace(/\s/g, "+");
 
     $(newRestaurantRowElem).attr({
-      id: index
+      "data-index": index
     });
     $(newRestaurantNameElem).text(markers[index][0]);
     $(newRestaurantRatingElem).text(markers[index][6]);
@@ -392,11 +388,12 @@ function createRestaurantTable(markers, reviews) {
     $(newOptionTableBodyElem).append(newRestaurantRowElem);
   })
 
+  // Create reviews table based on highest rated restaurant since that's the first one in the list, only shows the most recent 5 reviews
   $(reviews[0]).each(function (index, value) {
     let newReviewRowElem = $("<tr>");
-    let newReviewRatingElem = $("<td>");
+    let newReviewRatingElem = $("<td class=\"center-align\">");
     let newReviewCommentElem = $("<td>");
-    let newReviewDateElem = $("<td>");
+    let newReviewDateElem = $("<td class=\"center-align\">");
     if (reviews[0][index].review.rating_text === "Not rated") {
       $(newReviewRatingElem).text("Not Rated");
     } else {
@@ -410,5 +407,32 @@ function createRestaurantTable(markers, reviews) {
     $(newReviewRowElem).append(newReviewDateElem);
     $(newReviewTableBodyElem).append(newReviewRowElem);
   })
-  $("#restaurantOptions table tbody tr #0").addClass("selected");
+  $("#restaurantOptions tbody tr:first-child").addClass("selected");
+}
+
+function changeReviewsTable() {
+  let selectedRestaurant = $(this);
+  let selectedRestaurantIndex = $(selectedRestaurant).attr("data-index");
+  let reviewsTbodyElem = $("#reviews table tbody");
+
+  $(selectedRestaurant).addClass("selected").siblings().removeClass("selected");
+  $(reviewsTbodyElem).empty();
+  $(reviews[selectedRestaurantIndex]).each(function (index, value) {
+    let newReviewRowElem = $("<tr>");
+    let newReviewRatingElem = $("<td class=\"center-align\">");
+    let newReviewCommentElem = $("<td>");
+    let newReviewDateElem = $("<td class=\"center-align\">");
+    if (reviews[selectedRestaurantIndex][index].review.rating_text === "Not rated") {
+      $(newReviewRatingElem).text("Not Rated");
+    } else {
+      $(newReviewRatingElem).text(reviews[selectedRestaurantIndex][index].review.rating);
+    }
+    $(newReviewCommentElem).text(reviews[selectedRestaurantIndex][index].review.review_text);
+    $(newReviewDateElem).text(reviews[selectedRestaurantIndex][index].review.review_time_friendly);
+
+    $(newReviewRowElem).append(newReviewRatingElem);
+    $(newReviewRowElem).append(newReviewCommentElem);
+    $(newReviewRowElem).append(newReviewDateElem);
+    $(reviewsTbodyElem).append(newReviewRowElem);
+  })
 }
