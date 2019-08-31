@@ -1,17 +1,20 @@
-header, .subtitle-two{
+header {
     text-align: center;
+} 
+
+.subtitle-two{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 15px;
 }
 
 .subtitle {
-    margin-top: 20px;
+    margin-top: 30px;
+    margin-bottom: 15px;
 }
 
 h3, h4, h5 {
     font-family: 'Parisienne', cursive;
-}
-
-button {
-    border-radius: 6px;
 }
 
 #map-container {
@@ -35,12 +38,7 @@ button {
 
 #iconA {
     text-align: center;
-    margin-top: 175px;
-}
-
-#iconB {
-    text-align: center;
-    margin-top: 70px;
+    padding: 25px;
 }
 
 #border {

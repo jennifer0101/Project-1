@@ -67,15 +67,10 @@
                         </form>
                     </div>
                 </div>
-                <div class="col s12 m12 l2">
-                    <p id="iconA">
-                        <i class="small material-icons">arrow_forward</i>
-                    </p>
-                </div>
                 <div class="col s12 m12 l5">
                     <!--"Your Friend's Address" - second form wrapper-->
                     <div id="formTwo-wrapper">
-                        <h5 class="subtitle">Your friend's address:</h5>
+                        <h5 class="subtitle">Friend's address:</h5>
                         <form id="your-friend">
                             <div class="row" style="margin-bottom: 0px;">
                                 <div class="input-field col s12">
@@ -106,87 +101,43 @@
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <p class="z-depth-1" id="border"></p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12 m3 l3">
-                <!--Radius and Cuisine selector wrapper-->
-                <div id="cuisineRadius-wrapper">
-                    <h5 class="subtitle">Midpoint Radius in Miles:</h5>
-                    <!--Radius input form-->
-                    <form id="radius-input">
-                        <div class="input-field col s12">
-                            <input id="radius" type="text" class="validate">
-                            <label for="radius">Enter whole number</label>
+                <div class="col s12 m12 l2">
+                    <div class="row">
+                        <div class="col s12">
+                            <h5 class="subtitle">Midpoint Radius:</h5>
+                            <!--Radius input form-->
+                            <form id="radius-input">
+                                <div class="input-field col s12">
+                                    <input id="radius" type="text" class="validate">
+                                    <label for="radius">Number in miles</label>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                         <div class="col s12">
+                    <p id="iconA">
+                        <i class="small material-icons">restaurant_menu</i>
+                    </p>
+                </div>
+                    <!--Submit button for forms-->
+                        <div class="col s12 center-align">
+                            <button id="submit" class="waves-effect btn-small" type="submit">Submit</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col s12 m2 l2">
-                <p id="iconB">
-                    <i class="small material-icons">restaurant_menu</i>
-                </p>
-            </div>
-            <div class="col s12 m4 l4" id="cuisine-choice">
-                <h5 class="subtitle">Cuisine Choice:</h5>
-                <!--Cuisine selector-->
-                <div class="input-field">
-                    <select id="cuisine" class="initialized">
-                        <option value="" disabled="" selected="">Choose your cuisine</option>
-                        <option value="African">African</option>
-                        <option value="American">American</option>
-                        <option value="Asian">Asian</option>
-                        <option value="Bakery">Bakery</option>
-                        <option value="Bar Food">Bar Food</option>
-                        <option value="Caribbean">Caribbean</option>
-                        <option value="Coffee and Tea">Coffee and Tea</option>
-                        <option value="Deli">Deli</option>
-                        <option value="Desserts">Desserts</option>
-                        <option value="Diner">Diner</option>
-                        <option value="Fast Food">Fast Food</option>
-                        <option value="Indian">Indian</option>
-                        <option value="International">International</option>
-                        <option value="Italian">Italian</option>
-                        <option value="Latin American">Latin American</option>
-                        <option value="Middle Eastern">Middle Eastern</option>
-                        <option value="Pizza">Pizza</option>
-                        <option value="Seafood">Seafood</option>
-                        <option value="Southwestern">Southwestern</option>
-                        <option value="Vegetarian">Vegetarian</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <!--Submit button for forms-->
-        <div class="col s12 m12 l12 right-align" style="margin-bottom: 8px">
-            <button id="submit" class="waves-effect btn-small" type="submit">Submit</button>
-        </div>
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <p class="z-depth-1" id="border"></p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <!--Map container and subtitle wrapper-->
-                <div id="map-wrapper">
-                    <h4 class="subtitle-two">Mmm•Eat in the Middle</h4>
-                    <!--Map container-->
-                    <div id="map-container">
-                        <!--Map goes here-->
+            <div class="row">
+                <div class="col s12 m12 l12">
+                    <!--Map container and subtitle wrapper-->
+                    <div id="map-wrapper">
+                        <h4 class="subtitle-two">Mmm•Eat in the Middle</h4>
+                        <!--Map container-->
+                        <div id="map-container" class="z-depth-1">
+                            <!--Map goes here-->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!--Parallax effect second photo-->
-    <div class="parallax-container z-depth-1" style="height: 250px;">
-        <div class="parallax"><img src="assets/images/food-2.jpg"></div>
     </div>
     <div class="container">
         <div class="row">
@@ -226,23 +177,20 @@
                 </div>
             </div>
         </div>
-        <!--Parallax effect second photo-->
+    </div>
+    <!--Parallax effect second photo-->
     <div class="parallax-container z-depth-1" style="height: 250px;">
-            <div class="parallax"><img src="assets/images/food-2.jpg"></div>
-        </div>
-
-
-
-    
-        
-        <footer>
-            <p>Copyright</p>
-        </footer>
-        <!--Javascript file-->
-        <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8ImaXYyrXJ_IWWo4wClOjDonu4XtDmVk&callback=initMap">
+        <div class="parallax"><img src="assets/images/food-2.jpg"></div>
+    </div>
+    <footer>
+        <p>Copyright&copy;</p>
+        <p>Powered by Zomato</p>
+    </footer>
+    <!--Javascript file-->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8ImaXYyrXJ_IWWo4wClOjDonu4XtDmVk&callback=initMap">
         </script>
-        <script src="assets/javascript/logic.js"></script>
+    <script src="assets/javascript/logic.js"></script>
 
 </body>
 
