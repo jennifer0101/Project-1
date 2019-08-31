@@ -1,7 +1,7 @@
 //Materialize Parallax, submit effect function.
 $(document).ready(function () {
   $('.parallax').parallax();
-  $('select').material_select();
+  $('select').formSelect();
   $("#submit").on("click", validateInputs);
 });
 
@@ -298,13 +298,13 @@ function midPointMap(midPoint, markers, radiusInput) {
 
 function createRestaurantTable(markers) {
   let restaurants = markers;
-  let newOptionTableElem = $("<table>");
+  let newOptionTableElem = $("<table class= 'z-depth-1 highlight'>");
   let newOptionTableHeadElem = $("<thead>");
   let newOptionTableHeadRowElem = $("<tr>");
-  let newOptionTableHeaderNameElem = $("<th>");
-  let newOptionTableHeaderRatingElem = $("<th>");
-  let newOptionTableHeaderAddressElem = $("<th>");
-  let newOptionTableHeaderWebsiteElem = $("<th>");
+  let newOptionTableHeaderNameElem = $("<th class=\"tableHeader\">");
+  let newOptionTableHeaderRatingElem = $("<th class=\"tableHeader\">");
+  let newOptionTableHeaderAddressElem = $("<th class=\"tableHeader\">");
+  let newOptionTableHeaderWebsiteElem = $("<th class=\"tableHeader\">");
   let newReviewTableElem = $("<table>");
 
   $("#restaurants").text("");
