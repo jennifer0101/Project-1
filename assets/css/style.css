@@ -50,6 +50,10 @@ button {
     border-width: 100%;
 }
 
+.tableHeader {
+    font-weight: bold;
+}
+
 .infoWindowContentMargin {
     margin: 2px 0;
 }
