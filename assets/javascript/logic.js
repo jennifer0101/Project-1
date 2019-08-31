@@ -1,18 +1,13 @@
 //Materialize Parallax, submit effect function.
 $(document).ready(function () {
   $('.parallax').parallax();
+  $('select').material_select();
   $("#submit").on("click", validateInputs);
-});
-
-//Materialize Selector
-$(function(){
-  $(document).ready(function() {
-      $('select').material_select();
-    });
 });
 
 // Global variables and prototypes declared
 var map;
+var reviews = [];
 //-- Define radius function
 if (typeof (Number.prototype.toRad) === "undefined") {
   Number.prototype.toRad = function () {
@@ -51,6 +46,7 @@ function validateInputs(event) {
   let newPElem_ZipB = $("<p class=\"zip redText\">");
   let newPElem_StateA = $("<p class=\"state redText\">");
   let newPElem_StateB = $("<p class=\"state redText\">");
+  let newPElem_Radius = $("<p class=\"radius redText\">");
   let inputsRequired = {
     address_oneA: $("#address_oneA").val().trim(),
     cityA: $("#cityA").val().trim(),
@@ -59,7 +55,8 @@ function validateInputs(event) {
     address_oneB: $("#address_oneB").val().trim(),
     cityB: $("#cityB").val().trim(),
     stateB: $("#stateB").val().trim(),
-    zipcodeB: $("#zipcodeB").val().trim()
+    zipcodeB: $("#zipcodeB").val().trim(),
+    radius: $("#radius").val().trim()
   }
   let lowerStateA = inputsRequired.stateA.toLowerCase();
   let lowerStateB = inputsRequired.stateB.toLowerCase();
@@ -71,7 +68,9 @@ function validateInputs(event) {
   $(newPElem_ZipB).text("Improper zipcode format, XXXXX or XXXXX-XXXX are acceptable.");
   $(newPElem_StateA).text("Improper state format, XX is acceptable.");
   $(newPElem_StateB).text("Improper state format, XX is acceptable.");
+  $(newPElem_Radius).text("You must enter a whole integer number, no decimals or letters.")
 
+  // Testing the required inputs to make sure they all have data. ie, are not empty
   $(Object.keys(inputsRequired)).each(function (index, value) {
     let newPElem = $("<p class=\"empty redText\">");
     $(newPElem).text("You cannot leave this field empty");
@@ -90,6 +89,18 @@ function validateInputs(event) {
       }
     }
   })
+
+  // Testing if radius is a whole number
+  if (!Number.isInteger(Number(inputsRequired.radius))) {
+    if ($("#radius").siblings(".radius").length === 0) {
+      $("#radius").parent().append(newPElem_Radius);
+    }
+    badInputCheck = true;
+  } else {
+    if ($("#radius").siblings(".radius")) {
+      $("#radius").siblings(".radius").remove();
+    }
+  }
 
   // Testing if ZipA is in proper format
   if (!/^\d{5}$|^\d{5}-\d{4}$/.test(inputsRequired.zipcodeA)) {
@@ -207,10 +218,23 @@ function midPointCalc(latlongs) {
 }
 
 function zomatoCall(midPoint) {
-  let queryURL = "https://developers.zomato.com/api/v2.1/search?lat=" + midPoint.lat + "&lon=" + midPoint.lng + "&radius=4023.36&sort=real_distance&apikey=8b2f1efc94c42842b627309b15cae91b";
+  let cuisine = $("#cuisine").val();
+  let radiusInput = $("#radius").val().trim();
+  let queryURL;
+
+  // converting miles input to meters as required by api call
+  radiusInput = radiusInput * 1609.344;
+
+  if (cuisine) {
+    queryURL = "https://developers.zomato.com/api/v2.1/search?lat=" + midPoint.lat + "&lon=" + midPoint.lng + "&cuisines=" + cuisine + "&radius=" + radiusInput + "&sort=real_distance&apikey=8b2f1efc94c42842b627309b15cae91b";
+  } else {
+    queryURL = "https://developers.zomato.com/api/v2.1/search?lat=" + midPoint.lat + "&lon=" + midPoint.lng + "&radius=" + radiusInput + "&sort=real_distance&apikey=8b2f1efc94c42842b627309b15cae91b";
+  }
+
   $.ajax({
     url: queryURL,
-    method: "GET"
+    method: "GET",
+    data: radiusInput
   }).then(function (response) {
     let markers = [];
     let sorted = response.restaurants.slice(0);
@@ -219,31 +243,20 @@ function zomatoCall(midPoint) {
     })
 
     for (var i = 0; i < 5; i++) {
-      markers.push([sorted[i].restaurant.name, sorted[i].restaurant.location.latitude, sorted[i].restaurant.location.longitude, sorted[i].restaurant.location.address, sorted[i].restaurant.phone_numbers, sorted[i].restaurant.url])
+      markers.push([sorted[i].restaurant.name, sorted[i].restaurant.location.latitude, sorted[i].restaurant.location.longitude, sorted[i].restaurant.location.address, sorted[i].restaurant.phone_numbers, sorted[i].restaurant.url, sorted[i].restaurant.user_rating.aggregate_rating])
+      reviews.push(sorted[i].restaurant.all_reviews.reviews);
     }
     console.log("response: ", response);
     console.log("sorted resp: ", sorted);
     console.log(markers);
-    midPointMap(midPoint, markers);
-
-    //Displaying the options the area below==========================================
-    $("#option-container").append("<tr><td>" + markers[0][0] + "<td>" + markers[0][3] + "<td>" + markers[0][5]);
-    $("#option-container").append("<tr><td>" + markers[1][0] + "<td>" + markers[1][3] + "<td>" + markers[1][5]);
-    $("#option-container").append("<tr><td>" + markers[2][0] + "<td>" + markers[2][3] + "<td>" + markers[2][5]);
-    $("#option-container").append("<tr><td>" + markers[3][0] + "<td>" + markers[3][3] + "<td>" + markers[3][5]);
-    $("#option-container").append("<tr><td>" + markers[4][0] + "<td>" + markers[4][3] + "<td>" + markers[4][5]);
-
-    console.log(markers[0][0]);
-    console.log(markers[0][3]);
-    console.log(markers[0][5]);
-
-    //===============================================================================
+    console.log(reviews);
+    midPointMap(midPoint, markers, radiusInput);
+    createRestaurantTable(markers);
   })
 }
 
-function midPointMap(midPoint, markers) {
+function midPointMap(midPoint, markers, radiusInput) {
   map.setCenter(midPoint);
-  map.setZoom(12.5);
   let bounds = new google.maps.LatLngBounds();
   let radius = new google.maps.Circle({
     strokeColor: '#FF0000',
@@ -253,7 +266,7 @@ function midPointMap(midPoint, markers) {
     fillOpacity: 0.15,
     map: map,
     center: midPoint,
-    radius: 4023.36
+    radius: radiusInput
   });
 
   // Display multiple markers on a map
@@ -278,18 +291,67 @@ function midPointMap(midPoint, markers) {
         infoWindow.open(map, marker);
       }
     })(marker, i));
-
-
-    // ***this is not needed becuase we are not zooming in beyond our radius***
-    // Automatically center the map fitting all markers on the screen 
-    // map.fitBounds(bounds);
   }
+  // Automatically center the map fitting all markers on the screen 
+  map.fitBounds(radius.getBounds(), 0);
+}
 
+function createRestaurantTable(markers) {
+  let restaurants = markers;
+  let newOptionTableElem = $("<table>");
+  let newOptionTableHeadElem = $("<thead>");
+  let newOptionTableHeadRowElem = $("<tr>");
+  let newOptionTableHeaderNameElem = $("<th>");
+  let newOptionTableHeaderRatingElem = $("<th>");
+  let newOptionTableHeaderAddressElem = $("<th>");
+  let newOptionTableHeaderWebsiteElem = $("<th>");
+  let newReviewTableElem = $("<table>");
 
-  // ***this is not needed becuase we are not zooming in beyond our radius***
-  // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
-  // let boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
-  //   this.setZoom(12.5);
-  //   google.maps.event.removeListener(boundsListener);
-  // });
+  $("#restaurants").text("");
+  $(newOptionTableHeaderNameElem).text("Name");
+  $(newOptionTableHeaderRatingElem).text("Rating");
+  $(newOptionTableHeaderAddressElem).text("Address");
+  $(newOptionTableHeaderWebsiteElem).text("Website");
+  $("#restaurants").append(newOptionTableElem);
+  $(newOptionTableElem).append(newOptionTableHeadElem);
+  $(newOptionTableHeadElem).append(newOptionTableHeadRowElem);
+  $(newOptionTableHeadRowElem).append(newOptionTableHeaderNameElem);
+  $(newOptionTableHeadRowElem).append(newOptionTableHeaderRatingElem);
+  $(newOptionTableHeadRowElem).append(newOptionTableHeaderAddressElem);
+  $(newOptionTableHeadRowElem).append(newOptionTableHeaderWebsiteElem);
+
+  $(restaurants).each(function (index, value) {
+    let newRestaurantRowElem = $("<tr>");
+    let newRestaurantNameElem = $("<td>");
+    let newRestaurantRatingElem = $("<td>");
+    let newRestaurantAddressElem = $("<td>");
+    let newAddressAnchorElem = $("<a>");
+    let newRestaurantWebsiteElem = $("<td>");
+    let newWebsiteAnchorElem = $("<a>");
+    let tempRestaurantAddress = markers[index][3];
+    let modRestaurantAddress = tempRestaurantAddress.replace(/\s/g, "+");
+
+    $(newRestaurantNameElem).text(markers[index][0]);
+    $(newRestaurantRatingElem).text(markers[index][6]);
+    $(newAddressAnchorElem).attr({
+      href: "https://google.com/maps/search/" + modRestaurantAddress + "?hl=en",
+      target: "_blank",
+      alt: "Search Google Maps for this Address"
+    });
+    $(newAddressAnchorElem).text(markers[index][3]);
+    $(newWebsiteAnchorElem).attr({
+      href: markers[index][5],
+      target: "_blank",
+      alt: "Zomato's " + markers[index][0] + " Page"
+    });
+    $(newWebsiteAnchorElem).text(markers[index][0]);
+    $(newRestaurantAddressElem).append(newAddressAnchorElem);
+    $(newRestaurantWebsiteElem).append(newWebsiteAnchorElem);
+
+    $(newRestaurantRowElem).append(newRestaurantNameElem);
+    $(newRestaurantRowElem).append(newRestaurantRatingElem);
+    $(newRestaurantRowElem).append(newRestaurantAddressElem);
+    $(newRestaurantRowElem).append(newRestaurantWebsiteElem);
+    $(newOptionTableElem).append(newRestaurantRowElem);
+  })
 }

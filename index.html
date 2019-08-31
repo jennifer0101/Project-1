@@ -136,7 +136,7 @@
                 <h5 class="subtitle">Cuisine Choice:</h5>
                 <!--Cuisine selector-->
                 <div class="input-field">
-                    <select class="initialized">
+                    <select id="cuisine" class="initialized">
                         <option value="" disabled="" selected="">Choose your cuisine</option>
                         <option value="African">African</option>
                         <option value="American">American</option>
@@ -198,16 +198,6 @@
                         <h4 class="subtitle-two">Restaurant Options</h4>
                         <!--Restaurant options container-->
                         <div id="restaurants">Fill out the address form above to see your restaurant options.
-                            <table id="option-container" class="highlight responsive-table striped z-depth-1" style="margin-top: 40px; margin-bottom: 40px;">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Address</th>
-                                        <th>Website</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
                         </div>
                     </div>
                     <!--Restaurant reviews and subtitle wrapper-->
@@ -241,7 +231,7 @@
         <!--Javascript file-->
         <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8ImaXYyrXJ_IWWo4wClOjDonu4XtDmVk&callback=initMap">
-            </script>
+        </script>
         <script src="assets/javascript/logic.js"></script>
 
 </body>
