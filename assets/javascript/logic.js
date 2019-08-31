@@ -6,6 +6,7 @@ $(document).ready(function () {
 
 // Global variables and prototypes declared
 var map;
+var reviews = [];
 //-- Define radius function
 if (typeof (Number.prototype.toRad) === "undefined") {
   Number.prototype.toRad = function () {
@@ -212,31 +213,20 @@ function zomatoCall(midPoint) {
     })
 
     for (var i = 0; i < 5; i++) {
-      markers.push([sorted[i].restaurant.name, sorted[i].restaurant.location.latitude, sorted[i].restaurant.location.longitude, sorted[i].restaurant.location.address, sorted[i].restaurant.phone_numbers, sorted[i].restaurant.url])
+      markers.push([sorted[i].restaurant.name, sorted[i].restaurant.location.latitude, sorted[i].restaurant.location.longitude, sorted[i].restaurant.location.address, sorted[i].restaurant.phone_numbers, sorted[i].restaurant.url, sorted[i].restaurant.user_rating.aggregate_rating])
+      reviews.push(sorted[i].restaurant.all_reviews.reviews);
     }
     console.log("response: ", response);
     console.log("sorted resp: ", sorted);
     console.log(markers);
+    console.log(reviews);
     midPointMap(midPoint, markers);
-
-    //Displaying the options the area below==========================================
-    $("#option-container").append("<tr><td>" + markers[0][0] + "<td>" + markers[0][3] + "<td>" + markers[0][5]);
-    $("#option-container").append("<tr><td>" + markers[1][0] + "<td>" + markers[1][3] + "<td>" + markers[1][5]);
-    $("#option-container").append("<tr><td>" + markers[2][0] + "<td>" + markers[2][3] + "<td>" + markers[2][5]);
-    $("#option-container").append("<tr><td>" + markers[3][0] + "<td>" + markers[3][3] + "<td>" + markers[3][5]);
-    $("#option-container").append("<tr><td>" + markers[4][0] + "<td>" + markers[4][3] + "<td>" + markers[4][5]);
-
-    console.log(markers[0][0]);
-    console.log(markers[0][3]);
-    console.log(markers[0][5]);
-
-    //===============================================================================
+    createRestaurantTable(markers);
   })
 }
 
 function midPointMap(midPoint, markers) {
   map.setCenter(midPoint);
-  map.setZoom(12.5);
   let bounds = new google.maps.LatLngBounds();
   let radius = new google.maps.Circle({
     strokeColor: '#FF0000',
@@ -272,12 +262,9 @@ function midPointMap(midPoint, markers) {
       }
     })(marker, i));
 
-
-    // ***this is not needed becuase we are not zooming in beyond our radius***
     // Automatically center the map fitting all markers on the screen 
-    // map.fitBounds(bounds);
+    map.fitBounds(radius.getBounds(), 0);
   }
-
 
   // ***this is not needed becuase we are not zooming in beyond our radius***
   // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
@@ -285,4 +272,56 @@ function midPointMap(midPoint, markers) {
   //   this.setZoom(12.5);
   //   google.maps.event.removeListener(boundsListener);
   // });
+}
+
+function createRestaurantTable(markers) {
+  let restaurants = markers;
+  let newOptionTableElem = $("<table>");
+  let newOptionTableHeadElem = $("<thead>");
+  let newOptionTableHeadRowElem = $("<tr>");
+  let newOptionTableHeaderNameElem = $("<th>");
+  let newOptionTableHeaderRatingElem = $("<th>");
+  let newOptionTableHeaderAddressElem = $("<th>");
+  let newOptionTableHeaderWebsiteElem = $("<th>");
+  let newReviewTableElem = $("<table>");
+
+  $("#restaurants").text("");
+  $(newOptionTableHeaderNameElem).text("Name");
+  $(newOptionTableHeaderRatingElem).text("Rating");
+  $(newOptionTableHeaderAddressElem).text("Address");
+  $(newOptionTableHeaderWebsiteElem).text("Website");
+  $("#restaurants").append(newOptionTableElem);
+  $(newOptionTableElem).append(newOptionTableHeadElem);
+  $(newOptionTableHeadElem).append(newOptionTableHeadRowElem);
+  $(newOptionTableHeadRowElem).append(newOptionTableHeaderNameElem);
+  $(newOptionTableHeadRowElem).append(newOptionTableHeaderRatingElem);
+  $(newOptionTableHeadRowElem).append(newOptionTableHeaderAddressElem);
+  $(newOptionTableHeadRowElem).append(newOptionTableHeaderWebsiteElem);
+
+  $(restaurants).each(function (index, value) {
+    let newRestaurantRowElem = $("<tr>");
+    let newRestaurantNameElem = $("<td>");
+    let newRestaurantRatingElem = $("<td>");
+    let newRestaurantAddressElem = $("<td>");
+    let newAddressAnchorElem = $("<a>");
+    let newRestaurantWebsiteElem = $("<td>");
+    let newWebsiteAnchorElem = $("<a>");
+    let tempRestaurantAddress = markers[index][3];
+    let modRestaurantAddress = tempRestaurantAddress.replace(/\s/g, "+");
+
+    $(newRestaurantNameElem).text(markers[index][0]);
+    $(newRestaurantRatingElem).text(markers[index][6]);
+    $(newAddressAnchorElem).attr({href: "https://google.com/maps/search/" + modRestaurantAddress + "?hl=en", target: "_blank", alt: "Search Google Maps for this Address"});
+    $(newAddressAnchorElem).text(markers[index][3]);
+    $(newWebsiteAnchorElem).attr({href: markers[index][5], target: "_blank", alt: "Zomato's " + markers[index][0] + " Page"});
+    $(newWebsiteAnchorElem).text(markers[index][0]);
+    $(newRestaurantAddressElem).append(newAddressAnchorElem);
+    $(newRestaurantWebsiteElem).append(newWebsiteAnchorElem);
+
+    $(newRestaurantRowElem).append(newRestaurantNameElem);
+    $(newRestaurantRowElem).append(newRestaurantRatingElem);
+    $(newRestaurantRowElem).append(newRestaurantAddressElem);
+    $(newRestaurantRowElem).append(newRestaurantWebsiteElem);
+    $(newOptionTableElem).append(newRestaurantRowElem);
+  })
 }
