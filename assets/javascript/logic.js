@@ -9,6 +9,8 @@ $(document).ready(function () {
 
 // Global variables and prototypes declared
 var map;
+var mapMarkers = [];
+var mapCircle = null;
 var reviews = [];
 
 // Define radius function
@@ -73,7 +75,7 @@ function validateInputs(event) {
   $(newPElem_ZipB).text("Improper zipcode format, XXXXX or XXXXX-XXXX are acceptable.");
   $(newPElem_StateA).text("Improper state format, XX is acceptable.");
   $(newPElem_StateB).text("Improper state format, XX is acceptable.");
-  $(newPElem_Radius).text("You must enter a whole integer number, no decimals or letters.")
+  $(newPElem_Radius).text("You must enter a whole number, no decimals or letters.")
 
   // Testing the required inputs to make sure they all have data. ie, are not empty
   $(Object.keys(inputsRequired)).each(function (index, value) {
@@ -222,18 +224,20 @@ function midPointCalc(latlongs) {
 }
 
 function zomatoCall(midPoint) {
-  let cuisine = $("#cuisine").val();
+  // Not currently using cuisine
+  // let cuisine = $("#cuisine").val();
   let radiusInput = $("#radius").val().trim();
   let queryURL;
 
   // Converting miles input to meters as required by api call
   radiusInput = radiusInput * 1609.344;
 
-  if (cuisine) {
-    queryURL = "https://developers.zomato.com/api/v2.1/search?lat=" + midPoint.lat + "&lon=" + midPoint.lng + "&cuisines=" + cuisine + "&radius=" + radiusInput + "&sort=real_distance&apikey=8b2f1efc94c42842b627309b15cae91b";
-  } else {
+  // Not currently using cuisine
+  // if (cuisine) {
+  //   queryURL = "https://developers.zomato.com/api/v2.1/search?lat=" + midPoint.lat + "&lon=" + midPoint.lng + "&cuisines=" + cuisine + "&radius=" + radiusInput + "&sort=real_distance&apikey=8b2f1efc94c42842b627309b15cae91b";
+  // } else {
     queryURL = "https://developers.zomato.com/api/v2.1/search?lat=" + midPoint.lat + "&lon=" + midPoint.lng + "&radius=" + radiusInput + "&sort=real_distance&apikey=8b2f1efc94c42842b627309b15cae91b";
-  }
+  // }
 
   $.ajax({
     url: queryURL,
@@ -256,9 +260,12 @@ function zomatoCall(midPoint) {
 }
 
 function midPointMap(midPoint, markers, radiusInput) {
+  if (mapMarkers.length !== 0 || mapCircle !== null) {
+    clearMap();
+  }
   map.setCenter(midPoint);
   let bounds = new google.maps.LatLngBounds();
-  let radius = new google.maps.Circle({
+  mapCircle = new google.maps.Circle({
     strokeColor: '#FF0000',
     strokeOpacity: 0.4,
     strokeWeight: 2,
@@ -291,10 +298,11 @@ function midPointMap(midPoint, markers, radiusInput) {
         infoWindow.open(map, marker);
       }
     })(marker, i));
+    mapMarkers.push(marker);
   }
 
   // Automatically center the map fitting all markers on the screen 
-  map.fitBounds(radius.getBounds(), 0);
+  map.fitBounds(mapCircle.getBounds(), 0);
 }
 
 function createRestaurantTable(markers, reviews) {
@@ -435,4 +443,13 @@ function changeReviewsTable() {
     $(newReviewRowElem).append(newReviewDateElem);
     $(reviewsTbodyElem).append(newReviewRowElem);
   })
+}
+
+function clearMap() {
+  $(mapMarkers).each(function(index, value) {
+    mapMarkers[index].setMap(null);
+  })
+  mapMarkers = [];
+  mapCircle.setMap(null);
+  mapCircle = null;
 }
