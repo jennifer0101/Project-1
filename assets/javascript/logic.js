@@ -317,13 +317,13 @@ function createRestaurantTable(markers, reviews) {
   // Restaurant reviews table variables
   let newReviewDivElem = $("<div id=\"reviews\">");
   let newReviewHeadingElem = $("<h4 class=\"subtitle-two\">");
-  let newReviewTableElem = $("<table>");
+  let newReviewTableElem = $("<table class=\"z-depth-1 highlight\">");
   let newReviewTableHeadElem = $("<thead>");
   let newReviewTableBodyElem = $("<tbody>");
   let newReviewTableHeadRowElem = $("<tr>");
   let newReviewTableHeaderRatingElem = $("<th class=\"tableHeader\">");
-  let newReviewTableHeaderCommentElem = $("<th class=\"tableHeader\">");
-  let newReviewTableHeaderDateElem = $("<th class=\"tableHeader\">");
+  let newReviewTableHeaderCommentElem = $("<th class=\"tableHeader reviewsHeaders\">");
+  let newReviewTableHeaderDateElem = $("<th class=\"tableHeader reviewsHeaders\">");
 
   // Restaurant options table elements combined
   $(restaurantsElem).text("");
@@ -347,6 +347,7 @@ function createRestaurantTable(markers, reviews) {
   $(restaurantsElem).append(newReviewDivElem);
   $(newReviewDivElem).append(newReviewHeadingElem);
   $(newReviewHeadingElem).text("Restaurant Reviews");
+  $(newReviewHeadingElem).css("margin-top: 20px;");
   $(newReviewDivElem).append(newReviewTableElem);
   $(newReviewTableElem).append(newReviewTableHeadElem);
   $(newReviewTableHeadElem).append(newReviewTableHeadRowElem);
@@ -394,9 +395,9 @@ function createRestaurantTable(markers, reviews) {
 
   $(reviews[0]).each(function (index, value) {
     let newReviewRowElem = $("<tr>");
-    let newReviewRatingElem = $("<td>");
+    let newReviewRatingElem = $("<td class=\"reviewsHeaders\">");
     let newReviewCommentElem = $("<td>");
-    let newReviewDateElem = $("<td>");
+    let newReviewDateElem = $("<td class=\"reviewsHeaders\">");
     if (reviews[0][index].review.rating_text === "Not rated") {
       $(newReviewRatingElem).text("Not Rated");
     } else {

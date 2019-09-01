@@ -1,13 +1,9 @@
-<<<<<<< HEAD
 header {
-=======
-header,
-.subtitle-two {
->>>>>>> 20bbcfa3c80bca96f7b3b6986990ddb599fcc200
     text-align: center;
+    padding: 10px;
 } 
 
-.subtitle-two{
+.subtitle-two {
     text-align: center;
     margin-top: 30px;
     margin-bottom: 15px;
@@ -26,6 +22,13 @@ h5,
 h6 {
     font-family: 'Parisienne', cursive;
 }
+
+a, 
+a:link, 
+a:visited {
+    color: #75c8ae;
+    text-decoration: none;
+  }
 
 #map-container {
     height: 487px;
@@ -48,7 +51,7 @@ h6 {
 
 #iconA {
     text-align: center;
-    padding: 25px;
+    padding: 40px;
 }
 
 #border {
@@ -70,14 +73,30 @@ h6 {
     background-color: lightslategray;
 }
 
+.reviewsHeaders {
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 50px;
+}
+
+@media only screen and (max-width: 1464px) {
+
+    #iconA {
+       padding: 25px;
+    }
+}
+
 @media only screen and (max-width: 992px) {
 
     #iconA {
         margin-top: 0px;
     }
 
-    #iconB {
-        margin-top: 0px;
+    #radius-input {
+        width: 127px;
     }
 }
 
