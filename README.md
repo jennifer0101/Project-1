@@ -10,12 +10,12 @@ There is a need for people to be able to find restaurants to meet at in between 
 
 ## Built With 
 
-*Javascript
-*jQuery
-*CSS
-*Materialize
-*Google Maps API
-*Zomato API
+* Javascript
+* jQuery
+* CSS
+* Materialize
+* Google Maps API
+* Zomato API
 
 ## Credits
 
