@@ -1,5 +1,12 @@
 header {
     text-align: center;
+    padding: 10px;
+} 
+
+.subtitle-two {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 15px;
 }
 
 .subtitle {
@@ -18,6 +25,13 @@ h4,
 h5 {
     font-family: 'Parisienne', cursive;
 }
+
+a, 
+a:link, 
+a:visited {
+    color: #75c8ae;
+    text-decoration: none;
+  }
 
 #map-container {
     height: 487px;
@@ -40,7 +54,7 @@ h5 {
 
 #iconA {
     text-align: center;
-    padding: 25px;
+    padding: 40px;
 }
 
 #border {
@@ -48,10 +62,6 @@ h5 {
     border-style: solid;
     border-color: #90908d;
     border-width: 100%;
-}
-
-.formBorder {
-    border-right: 2px solid lightgray;
 }
 
 .directions {
@@ -79,14 +89,30 @@ h5 {
     margin-top: 4px;
 }
 
+.reviewsHeaders {
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 50px;
+}
+
+@media only screen and (max-width: 1464px) {
+
+    #iconA {
+       padding: 25px;
+    }
+}
+
 @media only screen and (max-width: 992px) {
 
     #iconA {
         margin-top: 0px;
     }
 
-    #iconB {
-        margin-top: 0px;
+    #radius-input {
+        width: 127px;
     }
 
     .formBorder {

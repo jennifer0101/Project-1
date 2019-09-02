@@ -321,7 +321,7 @@ function createRestaurantTable(markers, reviews) {
   // Restaurant reviews table variables
   let newReviewDivElem = $("<div id=\"reviews\">");
   let newReviewHeadingElem = $("<h4 class=\"reviewsHeading\">");
-  let newReviewTableElem = $("<table class=\"hightlight hoverable\">");
+  let newReviewTableElem = $("<table class=\"hightlight hoverable z-depth-1\">");
   let newReviewTableHeadElem = $("<thead>");
   let newReviewTableBodyElem = $("<tbody>");
   let newReviewTableHeadRowElem = $("<tr>");
