@@ -71,16 +71,16 @@ function validateInputs(event) {
   let fullAddressB;
   let addresses = [];
 
-  $(newPElem_ZipA).text("Improper zipcode format, XXXXX or XXXXX-XXXX are acceptable.");
-  $(newPElem_ZipB).text("Improper zipcode format, XXXXX or XXXXX-XXXX are acceptable.");
-  $(newPElem_StateA).text("Improper state format, XX is acceptable.");
-  $(newPElem_StateB).text("Improper state format, XX is acceptable.");
-  $(newPElem_Radius).text("You must enter a whole number, no decimals or letters.")
+  $(newPElem_ZipA).text("Please format zip as XXXXX or XXXXX-XXXX.");
+  $(newPElem_ZipB).text("Please format zip as XXXXX or XXXXX-XXXX.");
+  $(newPElem_StateA).text("Please format state as XX");
+  $(newPElem_StateB).text("Please format state as XX");
+  $(newPElem_Radius).text("Please enter whole numbers only.")
 
   // Testing the required inputs to make sure they all have data. ie, are not empty
   $(Object.keys(inputsRequired)).each(function (index, value) {
     let newPElem = $("<p class=\"empty redText\">");
-    $(newPElem).text("You cannot leave this field empty");
+    $(newPElem).text("Required field");
     if (!inputsRequired[value]) {
       $("#" + value).addClass("inputError");
       if ($("#" + value).siblings(".empty").length === 0) {
@@ -189,8 +189,8 @@ function geoCodeAddresses(addresses) {
           midPointCalc(latlongs);
         }
       } else {
-        // ****************need to make this a modal or something other than an alert. i guess we don't HAVE to have it, but it's a good UX****************
-        alert('Geocode was not successful for the following reason: ' + status);
+        $('#modalText').text("Geocode was not successful for the following reason: " + status + ".");
+        $('#modal1').modal('open');
       }
     });
   })
@@ -236,7 +236,7 @@ function zomatoCall(midPoint) {
   // if (cuisine) {
   //   queryURL = "https://developers.zomato.com/api/v2.1/search?lat=" + midPoint.lat + "&lon=" + midPoint.lng + "&cuisines=" + cuisine + "&radius=" + radiusInput + "&sort=real_distance&apikey=8b2f1efc94c42842b627309b15cae91b";
   // } else {
-    queryURL = "https://developers.zomato.com/api/v2.1/search?lat=" + midPoint.lat + "&lon=" + midPoint.lng + "&radius=" + radiusInput + "&sort=real_distance&apikey=8b2f1efc94c42842b627309b15cae91b";
+  queryURL = "https://developers.zomato.com/api/v2.1/search?lat=" + midPoint.lat + "&lon=" + midPoint.lng + "&radius=" + radiusInput + "&sort=real_distance&apikey=8b2f1efc94c42842b627309b15cae91b";
   // }
 
   $.ajax({
@@ -446,7 +446,7 @@ function changeReviewsTable() {
 }
 
 function clearMap() {
-  $(mapMarkers).each(function(index, value) {
+  $(mapMarkers).each(function (index, value) {
     mapMarkers[index].setMap(null);
   })
   mapMarkers = [];
