@@ -95,9 +95,13 @@ a:visited {
     text-align: center;
 }
 
+.footerPar {
+    margin: 2px 0;
+}
+
 footer {
     text-align: center;
-    padding: 30px;
+    padding: 15px;
 }
 
 @media only screen and (max-width: 1464px) {
