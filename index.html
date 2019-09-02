@@ -31,12 +31,13 @@
     <!--Container for materialize grid-->
     <div class="container">
         <div class="row">
+            <div id="big-wrapper" class="center-align">
             <!--Both forms, titles, submit button wrapper-->
             <div id="bothForms-wrapper">
                 <!--"Your Address" - first form wrapper-->
                 <div class="col s12 l5">
                     <div id="formOne-wrapper">
-                        <h5 class="center-align">Your Address:</h5>
+                        <h5>Your Address:</h5>
                         <form id="your-address">
                             <div class="row" style="margin-bottom: 0px;">
                                 <div class="input-field col s12">
@@ -70,7 +71,7 @@
                 <div class="col s12 l5">
                     <!--"Your Friend's Address" - second form wrapper-->
                     <div id="formTwo-wrapper">
-                        <h5 class="center-align">Friend's Address:</h5>
+                        <h5>Friend's Address:</h5>
                         <form id="your-friend">
                             <div class="row" style="margin-bottom: 0px;">
                                 <div class="input-field col s12">
@@ -102,28 +103,21 @@
                     </div>
                 </div>
                 <div class="col s12 l2">
-                    <div class="row" style="margin-bottom: 0px;">
-                        <div class="col s12">
-                            <h5 class="center-align verticalMargin">Search Radius:</h5>
-                            <!--Radius input form-->
-                            <form id="radius-input">
-                                <div class="input-field col s12">
-                                    <input id="radius" type="text" class="validate">
-                                    <label for="radius">Number in miles</label>
-                                </div>
-                            </form>
+                    <h5>Search Radius:</h5>
+                    <!--Radius input form-->
+                    <form id="radius-input">
+                        <div class="input-field">
+                            <input id="radius" type="text" class="validate">
+                            <label for="radius">Number in miles</label>
                         </div>
-                        <div class="col s12">
-                            <p id="iconA">
-                                <i class="small material-icons">restaurant_menu</i>
-                            </p>
-                        </div>
-                        <!--Submit button for forms-->
-                        <div class="col s12 center-align">
-                            <button id="submit" class="waves-effect btn-small" type="submit">Submit</button>
-                        </div>
-                    </div>
+                    </form>
+                    <p id="iconA">
+                        <i class="small material-icons">restaurant_menu</i>
+                    </p>
+                    <!--Submit button for forms-->
+                    <button id="submit" class="waves-effect btn-small" type="submit">Submit</button>
                 </div>
+            </div>
             </div>
             <div class="row">
                 <div class="col s12">
