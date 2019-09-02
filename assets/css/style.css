@@ -14,12 +14,15 @@ header {
     margin-bottom: 15px;
 }
 
+#bothForms-wrapper {
+    margin: 0 0 15px 0;
+}
+
 h1,
 h2,
 h3,
 h4,
-h5,
-h6 {
+h5 {
     font-family: 'Parisienne', cursive;
 }
 
@@ -61,8 +64,20 @@ a:visited {
     border-width: 100%;
 }
 
+.formBorder {
+    border-right: 2px solid lightgray;
+}
+
+.directions {
+    font-size: 1rem;
+}
+
 .tableHeader {
     font-weight: bold;
+}
+
+.reviewsHeading {
+    margin: 50px 0 10px 0;
 }
 
 .infoWindowContentMargin {
@@ -70,7 +85,12 @@ a:visited {
 }
 
 .selected {
-    background-color: lightslategray;
+    background-color: lightgray;
+}
+
+.footerPar {
+    font-size: .8rem;
+    margin-top: 4px;
 }
 
 .reviewsHeaders {
@@ -98,6 +118,14 @@ footer {
     #radius-input {
         width: 127px;
     }
+
+    .formBorder {
+        border-right: none;
+    }
+
+    .verticalMargin {
+        margin-top: 25px;
+    }
 }
 
 @media only screen and (max-width: 650px) {
@@ -105,7 +133,6 @@ footer {
     #bothForms-wrapper {
         width: 100%;
     }
-
 
     #icon {
         margin-top: 0px;
