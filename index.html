@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <!-- responsive screen size viewport code-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mmm-Eat Project One</title>
+    <title>Mmm-Eat in the Middle</title>
     <!--Link to CSS reset-->
     <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
     <!-- Link to CSS style sheet-->
@@ -34,9 +34,9 @@
             <!--Both forms, titles, submit button wrapper-->
             <div id="bothForms-wrapper">
                 <!--"Your Address" - first form wrapper-->
-                <div class="col s12 m12 l5">
+                <div class="col s12 l5 formBorder">
                     <div id="formOne-wrapper">
-                        <h5 class="subtitle">Your address:</h5>
+                        <h5 class="center-align">Your Address:</h5>
                         <form id="your-address">
                             <div class="row" style="margin-bottom: 0px;">
                                 <div class="input-field col s12">
@@ -67,10 +67,10 @@
                         </form>
                     </div>
                 </div>
-                <div class="col s12 m12 l5">
+                <div class="col s12 l5 formBorder">
                     <!--"Your Friend's Address" - second form wrapper-->
                     <div id="formTwo-wrapper">
-                        <h5 class="subtitle">Friend's address:</h5>
+                        <h5 class="center-align verticalMargin">Friend's Address:</h5>
                         <form id="your-friend">
                             <div class="row" style="margin-bottom: 0px;">
                                 <div class="input-field col s12">
@@ -101,10 +101,10 @@
                         </form>
                     </div>
                 </div>
-                <div class="col s12 m12 l2">
-                    <div class="row">
+                <div class="col s12 l2">
+                    <div class="row" style="margin-bottom: 0px;">
                         <div class="col s12">
-                            <h5 class="subtitle">Search Radius:</h5>
+                            <h5 class="center-align verticalMargin">Search Radius:</h5>
                             <!--Radius input form-->
                             <form id="radius-input">
                                 <div class="input-field col s12">
@@ -113,12 +113,12 @@
                                 </div>
                             </form>
                         </div>
-                         <div class="col s12">
-                    <p id="iconA">
-                        <i class="small material-icons">restaurant_menu</i>
-                    </p>
-                </div>
-                    <!--Submit button for forms-->
+                        <div class="col s12">
+                            <p id="iconA">
+                                <i class="small material-icons">restaurant_menu</i>
+                            </p>
+                        </div>
+                        <!--Submit button for forms-->
                         <div class="col s12 center-align">
                             <button id="submit" class="waves-effect btn-small" type="submit">Submit</button>
                         </div>
@@ -126,10 +126,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col s12 m12 l12">
+                <div class="col s12">
                     <!--Map container and subtitle wrapper-->
                     <div id="map-wrapper">
-                        <h4 class="subtitle-two">Mmm•Eat in the Middle</h4>
+                        <h4 class="subtitle center-align">Mmm•Eat in the Middle</h4>
                         <!--Map container-->
                         <div id="map-container" class="z-depth-1">
                             <!--Map goes here-->
@@ -146,9 +146,12 @@
                 <div id="optionReview-wrapper">
                     <!--Restaurant options and subtitle wrapper-->
                     <div id="option-wrapper">
-                        <h4 class="subtitle-two">Restaurant Options</h4>
+                        <h4 class="center-align">Restaurant Options</h4>
                         <!--Restaurant options container-->
-                        <div id="restaurants">Fill out the address form above to see your restaurant options.
+                        <div id="restaurants">
+                            <p class="directions">
+                                Fill out the address form above to see your restaurant options.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -159,14 +162,14 @@
     <div class="parallax-container z-depth-1" style="height: 250px;">
         <div class="parallax"><img src="assets/images/food-2.jpg"></div>
     </div>
-    <footer>
-        <p>Copyright&copy;</p>
-        <p>Powered by Zomato</p>
+    <footer class="center-align">
+        <p class="footerPar">Copyright&copy; 2019</p>
+        <p class="footerPar">Powered by Zomato</p>
     </footer>
     <!--Javascript file-->
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8ImaXYyrXJ_IWWo4wClOjDonu4XtDmVk&callback=initMap">
-        </script>
+    </script>
     <script src="assets/javascript/logic.js"></script>
 
 </body>
