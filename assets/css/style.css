@@ -3,12 +3,6 @@ header {
     padding: 10px;
 } 
 
-.subtitle-two {
-    text-align: center;
-    margin-top: 30px;
-    margin-bottom: 15px;
-}
-
 .subtitle {
     margin-top: 30px;
     margin-bottom: 15px;
@@ -62,7 +56,7 @@ a:visited {
 
 #iconA {
     text-align: center;
-    padding: 40px;
+    padding: 45px;
 }
 
 #border {
@@ -109,7 +103,7 @@ footer {
 @media only screen and (max-width: 1464px) {
 
     #iconA {
-       padding: 25px;
+       padding: 32px;
     }
 }
 
@@ -119,12 +113,12 @@ footer {
         margin-top: 0px;
     }
 
-    #radius-input {
-        width: 127px;
+    #formOne-wrapper, #formTwo-wrapper {
+        width: 100%;
     }
 
-    .formBorder {
-        border-right: none;
+    #radius-input {
+        margin: 0 40%;
     }
 
     .verticalMargin {
@@ -133,10 +127,6 @@ footer {
 }
 
 @media only screen and (max-width: 650px) {
-
-    #bothForms-wrapper {
-        width: 100%;
-    }
 
     #icon {
         margin-top: 0px;
