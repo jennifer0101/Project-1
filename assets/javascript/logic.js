@@ -71,16 +71,16 @@ function validateInputs(event) {
   let fullAddressB;
   let addresses = [];
 
-  $(newPElem_ZipA).text("Please format zip as XXXXX or XXXXX-XXXX.");
-  $(newPElem_ZipB).text("Please format zip as XXXXX or XXXXX-XXXX.");
-  $(newPElem_StateA).text("Please format state as XX");
-  $(newPElem_StateB).text("Please format state as XX");
-  $(newPElem_Radius).text("Please enter whole numbers only.")
+  $(newPElem_ZipA).text("*Please format zip as XXXXX or XXXXX-XXXX.");
+  $(newPElem_ZipB).text("*Please format zip as XXXXX or XXXXX-XXXX.");
+  $(newPElem_StateA).text("*Please format state as XX");
+  $(newPElem_StateB).text("*Please format state as XX");
+  $(newPElem_Radius).text("*Please enter whole numbers only.")
 
   // Testing the required inputs to make sure they all have data. ie, are not empty
   $(Object.keys(inputsRequired)).each(function (index, value) {
     let newPElem = $("<p class=\"empty redText\">");
-    $(newPElem).text("Required field");
+    $(newPElem).text("*Required field");
     if (!inputsRequired[value]) {
       $("#" + value).addClass("inputError");
       if ($("#" + value).siblings(".empty").length === 0) {

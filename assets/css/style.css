@@ -47,6 +47,7 @@ a:visited {
 .redText {
     color: red;
     margin-top: 0;
+    margin-bottom: 8px;
 }
 
 #restaurants {
