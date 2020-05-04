@@ -2,7 +2,12 @@
 Coding Bootcamp Project 1
 
 ## Description
-Mmm-Eat in the middle is an application that allows the user to find a midpoint radius in between two locations for two different addresses. The user inputs these two addresses; their own and that of a friend. The user then inputs the radius in miles they wish the midpoint to encompass based on their unique circumstances. Once the submit button is clicked, the application generates five restaurant choices inside of the midpoint radius on Google Maps as options for two friends to meet at. These restaurants are populated by Zomato. A list of these restuarants is also generated underneath the map and includes the name, Zomato's rating, address, and website. Clicking on the address or website link will open these in a new browser window. Clicking on the highlighted row itself will populate the reviews table with a list of five Zomato user reviews, inlcluding ratings and date reviewed.  
+
+![](assets/images/responsive.jpg)
+
+Mmm-Eat in the middle is an application that allows the user to find a midpoint radius in between two locations for two different addresses. The user inputs these two addresses; their own and that of a friend. The user then inputs the radius in miles they wish the midpoint to encompass based on their unique circumstances. Once the submit button is clicked, the application generates five restaurant choices inside of the midpoint radius on Google Maps as options for two friends to meet at. These restaurants are populated by Zomato. A list of these restuarants is also generated underneath the map and includes the name, Zomato's rating, address, and website. Clicking on the address or website link will open these in a new browser window. Clicking on the highlighted row itself will populate the reviews table with a list of five Zomato user reviews, inlcluding ratings and date reviewed. 
+
+![](assets/images/Project-1.gif)
 
 ## Motivation
 
